@@ -1,21 +1,25 @@
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import * as JWT from "jsonwebtoken";
 import prismadata from "./app/api/utils/prismadata";
+import  cookies from "js-cookie"
 
 export const runtime = "nodejs";
 export async function middleware(req: NextRequest) {
+  const pathNameUrl = req.nextUrl.pathname
+console.log("pathname waa midkan from backend",pathNameUrl)
   try {
     const authToken = (await headers()).get("authorization")?.split(" ")[1];
     if (!authToken) {
-      return NextResponse.json({ error: "failed token not found" });
+      return NextResponse.json({ error: "failed token not found" },{status:401});
     }
 
    
     const jwtSecret = process.env.JWT_SECRET 
     const decoded =  JWT.verify(authToken, String(jwtSecret));
     const reqheaders = new Headers(req.headers);
-    const storecook = (await cookies()).set("user",JSON.stringify(decoded))
+    const storecook = cookies.set("userTokenId",JSON.stringify(decoded))
+    console.log("store cook waa this:",storecook)
     reqheaders.set("userId", JSON.stringify(decoded));
  const idU = Object(decoded).id
  const user = (await prismadata()).user.findUnique({where:{id:Number(idU)}})

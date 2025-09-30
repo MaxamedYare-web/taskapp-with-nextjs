@@ -1,4 +1,5 @@
 "use client";
+import Api from "@/app/lib/apidata";
 import {
   addToast,
   Button,
@@ -9,15 +10,12 @@ import {
   Image,
   Input,
   Link,
-  Skeleton,
-  Spinner,
-  toast,
+  Spinner
 } from "@heroui/react";
-import React, { useEffect, useState } from "react";
-import imgHead from "../../../public/nevergivup.png";
+import Cookies from "js-cookie";
 import NextImage from "next/image";
-import Api from "@/app/lib/apidata";
-import Cookies from "js-cookie"
+import React, { useState } from "react";
+import imgHead from "../../../public/nevergivup.png";
 
 
 type Iurl = any
@@ -39,12 +37,12 @@ const handleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
  try {
   const response = await Api.post("/auth/register",data)
  const dataUser = await response.data
+ console.log("user account is:",dataUser)
  if(dataUser.token){
-  console.log(dataUser.token)
   const cookData = Cookies.set("userToken",dataUser.token,{
     expires:7
   })
-  console.log(cookData)
+
    addToast({
     color:"success",
     timeout:3000,
@@ -55,7 +53,7 @@ const handleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
   })
  }
  if(dataUser.error){
-  console.log(dataUser.error)
+
   setErrors(dataUser.error)
    addToast({
     color:"danger",
@@ -99,7 +97,7 @@ const handleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
 }
 
 
-console.log("errors waa:",errors)
+
 
   return (
     <div className="h-screen flex justify-center p-2  items-center">
