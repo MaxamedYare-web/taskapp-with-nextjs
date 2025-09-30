@@ -42,6 +42,7 @@ const handleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
   const cookData = Cookies.set("userToken",dataUser.token,{
     expires:7
   })
+  console.log("dashhhhh",cookData)
 
    addToast({
     color:"success",
