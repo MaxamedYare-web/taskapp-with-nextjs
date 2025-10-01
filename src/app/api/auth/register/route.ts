@@ -26,7 +26,7 @@ export async function POST(req:NextRequest){
     const {user} = await prismadata()
     const extingUser = await user.findFirst({where:{OR:[{email:String(email)},{username:String(username)}]}})
     if(extingUser){
-        return NextResponse.json({error:"this Email or Username already was token please use another email or username"})
+        return NextResponse.json({error:"this Email or Username already was token please use another email or username"},{status:401})
     }
     const salt = await bcrypt.genSalt(10)
     password =  bcrypt.hashSync(password,salt)
@@ -43,7 +43,7 @@ export async function POST(req:NextRequest){
     }
    } catch (error) {
     const err = (error as Error).message
-    return NextResponse.json({error:`there is errors with create account: ${err}`},{status:500})
+    return NextResponse.json({error:`Network failed please check you interner`},{status:500})
    }
 
 }

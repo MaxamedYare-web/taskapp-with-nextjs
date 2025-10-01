@@ -1,5 +1,5 @@
 "use client";
-import Api from "@/app/lib/apidata";
+import { useRegister } from "@/app/lib/auth";
 import {
   addToast,
   Button,
@@ -12,92 +12,48 @@ import {
   Link,
   Spinner
 } from "@heroui/react";
-import Cookies from "js-cookie";
 import NextImage from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import imgHead from "../../../public/nevergivup.png";
-
-
-type Iurl = any
 
 
 const RegisterCom = () => {
   const [password,setPassword] = useState<string>("")
   const [cPassword,setCPassword] = useState<string>("")
-  const [token,setToken] = useState<string | null>(null)
- const [isLoading,setIsLoading] = useState<boolean>(false)
- const [data,setData] = useState(null)
- const [errors,setErrors] = useState(null)
+ const {registerUser,errors,isloading,userData}  = useRegister()
  
 
 const handleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
   e.preventDefault()
   const data = Object.fromEntries(new FormData(e.currentTarget))
-  setIsLoading(true)
- try {
-  const response = await Api.post("/auth/register",data)
- const dataUser = await response.data
- console.log("user account is:",dataUser)
- if(dataUser.token){
-  const cookData = Cookies.set("userToken",dataUser.token,{
-    expires:7
-  })
-  console.log("dashhhhh",cookData)
-
-   addToast({
-    color:"success",
-    timeout:3000,
-    title:"Conguration 🤗",
-    description:"Successfully you account was created",
-    variant:"flat",
-    shouldShowTimeoutProgress:true,
-  })
- }
- if(dataUser.error){
-
-  setErrors(dataUser.error)
-   addToast({
-    color:"danger",
-    timeout:5000,
-    title:"There is Error",
-    description:dataUser.error,
-    variant:"flat",
-    shouldShowTimeoutProgress:true,
-    classNames:{
-     closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2",
-    }
-    
-  })
-  return
- }
-
- if(dataUser.code == 'P5010'){
-  console.log("Network failed please check you internet")
-  addToast({
-    color:"danger",
-    timeout:5000,
-    title:"Network disconnect",
-    description:"Network failed please check you internet",
-    variant:"flat",
-    shouldShowTimeoutProgress:true,
-    classNames:{
-     closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2",
-    }
-    
-  })
-  return
- }
-
- console.log("get data is:",dataUser)
- } catch (error) {
-   console.log("errors is:",error)
- }finally{
-  setIsLoading(false)
- }
+registerUser(data)
 
 }
 
+useEffect(()=>{
+    if(errors){
+  
+      addToast({
+        title:"There is error",
+        color:"danger",
+        description:errors.response.data.error,
+        timeout:5000,
+        shouldShowTimeoutProgress:true
+      })
+    }
+},[errors])
+useEffect(()=>{
+    if(userData){
+      addToast({
+        title:"😍Conguration Hampalyo",
+        description:userData.message,
+        color:"success",
+        timeout:5000,
+        shouldShowTimeoutProgress:true
+      })
 
+    }
+},[userData])
 
 
   return (
@@ -182,7 +138,7 @@ const handleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
                   errorMessage={password !== cPassword && "Password and Confirm Password must same"}
                   name="cpassword"
                 />
-                <Button color="primary" type="submit">{isLoading ? (<p className="flex gap-2 items-center"><Spinner color="white"
+                <Button color="primary" type="submit">{isloading ? (<p className="flex gap-2 items-center"><Spinner color="white"
                 /> Creating... </p>):"Create Account"}</Button>
               </Form>
             </CardBody>

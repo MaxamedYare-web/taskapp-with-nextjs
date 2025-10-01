@@ -33,7 +33,6 @@ const LoginComponent = () => {
         LoginUser(data)
     }
 
-   
 
 useEffect(()=>{
     if(errors){
