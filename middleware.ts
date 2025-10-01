@@ -2,6 +2,7 @@
 import { AuthProtect } from "@/app/lib/authProtect"
 import { cookies, headers } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
+import JWT from "jsonwebtoken"
 
 export const runtime = "nodejs"
 export async function middleware(req:NextRequest){
@@ -11,9 +12,18 @@ console.log("diiwan galinta waa midkan:",isAuthenticate)
 const pathname = req.nextUrl.pathname
 const reqUser = req.headers.get("authorization")?.split(" ")[1]
 
-if(!reqUser && pathname.startsWith("/api/user") || pathname.startsWith("/api/admin")){
-    return NextResponse.json({error:"Bearer token not found"},{status:401})
-}
+  const JWT_SECRET = process.env.JWT_SECRET as string
+    const tokenID = JWT.verify(String(reqUser),JWT_SECRET)
+    const requestHeaders = new Headers(req.headers)
+    const testJ  = requestHeaders.set("userDataId",JSON.stringify(tokenID))
+console.log("tijaabo bbb",testJ)
+   return NextResponse.next({
+    request:{
+        headers:requestHeaders
+    }
+   })
+
+
 
 }
 

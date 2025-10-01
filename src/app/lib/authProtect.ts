@@ -1,6 +1,12 @@
 import JWT from "jsonwebtoken"
+import { cookies, headers } from "next/headers"
+import { NextResponse } from "next/server"
 
 
+
+interface IpropToken {
+   id:string
+}
 
 export async function AuthProtect(req:any):Promise<boolean>{
  const token = req.cookies.get("userToken")
@@ -8,11 +14,9 @@ export async function AuthProtect(req:any):Promise<boolean>{
        if(!token){
       return false
    }
-
-   console.log("iskuday kale token waa:",token.value)
        const JWT_SECRET = process.env.JWT_SECRET as string
-    const decoded = JWT.verify(token.value,JWT_SECRET)
-    console.log("aqoonsiga waa midkan:",decoded)
+    const tokenID = JWT.verify(token.value,JWT_SECRET)
+    const decoded = (tokenID as IpropToken).id
     return true
    } catch (error) {
     console.log(`failed you token expired or not found please try to login ${(error as Error).message}`)
