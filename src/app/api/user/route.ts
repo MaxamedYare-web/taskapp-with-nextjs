@@ -4,8 +4,7 @@ import  cookies  from "js-cookie";
 
 export async function GET(_req: NextRequest, _res: NextResponse) {
   try {
-    const getCook =  cookies.get("userTokenId");
-    console.log("get cookieas userka xogtiisa waa",getCook)
+ 
     // const { user } = await prismadata();
     // const userData = JSON.parse(getCook?.value as string);
     // const infoDat = {
