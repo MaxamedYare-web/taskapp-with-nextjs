@@ -47,18 +47,22 @@ useEffect(()=>{
 
 useEffect(()=>{
     if(userData){
+      
         addToast({
             title:"😍 Conguration hambaloy",
             description:`Waad ku gulesati in gasho accounkada ${userData.message}`,
-            timeout:3000,
+            timeout:2000,
             shouldShowTimeoutProgress:true,
             color:"success",
             variant:"flat"
 
         })
          setTimeout(()=>{
-            redirect("/dashboard")
-         },3000)
+            if(userData.role !== "Admin"){
+                 redirect("/dashboard")
+            }
+           redirect("/admin")
+         },2000)
     }
 },[userData])
 

@@ -17,6 +17,7 @@ model User  {
   lastname String
   username String
   password String
+  banned Boolean  @default(false)
   createdAt DateTime @default(now())
   role Role @default(User)
   tasks Tasks[]

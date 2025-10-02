@@ -1,11 +1,23 @@
-import { Card, CardHeader, Skeleton } from '@heroui/react'
-import React from 'react'
-import { Ban, CircleCheckBig, Landmark, User, UserPlus, Users } from "lucide-react";
+import { Card, CardHeader, User as Profile, Skeleton } from '@heroui/react';
+import { Ban, CircleCheckBig, UserPlus, Users } from "lucide-react";
 
-const Headeradmin = ({isLoading}:any) => {
+interface IpropHeader{
+  isLoading:any,
+  dataInfo:any
+}
+
+const Headeradmin = ({isLoading,dataInfo}:IpropHeader) => {
+
+
+console.log(dataInfo)
+
   return (<div className='w-full p-3'>
-      <h1 className='text-2xl font-bold text-gray-700'>Welcome Back, Admin</h1>
-    <div className='flex w-full justify-around gap-2'>
+      
+      <div className='flex justify-between items-center bg-white p-3 rounded'>
+    <h1 className='text-2xl font-bold text-gray-700'>Welcome Back, Admin</h1>
+    <Profile className='font-semibold capitalize' name={dataInfo.adminData.username} description={`@${dataInfo.adminData.role} `}/>
+      </div>
+    <div className='flex w-full justify-around gap-2 mt-3'>
       
        <Skeleton isLoaded={isLoading} className='w-full rounded-lg'>
    <Card className='w-full'>
@@ -28,7 +40,8 @@ const Headeradmin = ({isLoading}:any) => {
        </h1>
        </div>
       
-       <p className='font-bold'>20</p>
+       <p className='font-bold'>{dataInfo?.users?.length
+}</p>
         
     </CardHeader>
 
@@ -42,7 +55,7 @@ const Headeradmin = ({isLoading}:any) => {
           <h1 className='font-bold text-gray-500'>Total Tasks</h1>
        </div>
        
-        <p className='font-bold'>15</p>
+        <p className='font-bold'>{dataInfo?.tasksData?.length}</p>
     </CardHeader>
   </Card>
  </Skeleton>
@@ -51,7 +64,7 @@ const Headeradmin = ({isLoading}:any) => {
     <CardHeader className='flex flex-col'>
        <div className='flex items-center gap-1'>
         <Ban className='font-bold text-gray-500'/>
-         <h1 className='font-bold text-gray-500'>Total Banned User</h1>
+         <h1 className='font-bold text-gray-500'>Total Banned</h1>
        </div>
         
         <p className='font-bold'>0</p>

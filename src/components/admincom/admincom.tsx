@@ -19,9 +19,7 @@ export const AdminCom = ()=>{
     adminLog(token)
     },[token])
 
-  if(adminData){
-    console.log(adminData)
-  }
+ 
 
 
    useEffect(()=>{
@@ -34,17 +32,15 @@ export const AdminCom = ()=>{
 
  const logout = ()=>{
   Cookies.remove("userToken")
-  
  }
 
   if(adminData){
       return (
         <>
-        <div className="flex flex-col">
-            <div className="flex flex-row  items-start">
-              <NavBarCom isloading={isloading} logout={logout} />
-               <Headeradmin isLoading={isloading}/>
-            </div>
+        <div className="flex w-full">
+           
+               <Headeradmin isLoading={isloading} dataInfo={adminData}/>
+          
            
         </div>
         </>
