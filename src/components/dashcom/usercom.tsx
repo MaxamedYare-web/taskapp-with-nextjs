@@ -1,8 +1,9 @@
 "use client"
 import Api from '@/app/lib/apidata'
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import useSWR from "swr"
-
+import cookies from "js-cookie"
+import { redirect } from 'next/navigation'
 interface IuserProp {
   name: string
   email: string
@@ -12,7 +13,16 @@ interface IuserProp {
 const fecherU = (url:string) => Api.get(url).then((res)=>res.data)
 
 const Usercom = () => {
+  const token = cookies.get("userToken")
+
+   useEffect(()=>{
+    if(!token){
+    redirect("/auth/login")
+ }
+   },[token])
+
   const {data,isLoading,error} =  useSWR("/user",fecherU)
+
  
  
     return ( 

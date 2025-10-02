@@ -16,6 +16,7 @@ export default function Homepagecom  () {
 
   const progressCircle = useRef<SVGSVGElement | null>(null);
   const progressContent = useRef<HTMLSpanElement | null>(null);
+  
 
   const onAutoplayTimeLeft = (s: any, time: any, progress: any) => {
   if (progressCircle.current) {

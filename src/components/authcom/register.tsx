@@ -15,6 +15,7 @@ import {
 import NextImage from "next/image";
 import React, { useEffect, useState } from "react";
 import imgHead from "../../../public/nevergivup.png";
+import { redirect } from "next/navigation";
 
 
 const RegisterCom = () => {
@@ -45,13 +46,15 @@ useEffect(()=>{
 useEffect(()=>{
     if(userData){
       addToast({
-        title:"😍Conguration Hampalyo",
+        title:"😍Conguration Hampalyo Register successfully",
         description:userData.message,
         color:"success",
         timeout:5000,
         shouldShowTimeoutProgress:true
       })
-
+  setTimeout(()=>{
+     redirect("/dashboard")
+  },5000)
     }
 },[userData])
 

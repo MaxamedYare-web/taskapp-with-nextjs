@@ -6,11 +6,10 @@ import { cookies, headers } from "next/headers";
 export async function GET(req: NextRequest, _res: NextResponse) {
  
   try {
-  const decoded = (await headers()).get("userDataId")
-  const userId = JSON.parse(decoded as any)
+  const userId = (await headers()).get("userDataId")
     const { user } = await prismadata();
     const account = await user.findUnique({
-      where: { id: Number(userId.id) },
+      where: { id: Number(userId) },
       omit: { password: true },
     });
 

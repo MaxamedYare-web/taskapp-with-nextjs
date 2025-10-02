@@ -1,5 +1,5 @@
 "use client";
-import Api from "@/app/lib/apidata";
+import { useLoginUser } from "@/app/lib/auth";
 import {
     addToast,
     Button,
@@ -9,15 +9,14 @@ import {
     Form,
 
     Input,
-    Link,
+
     Spinner
 } from "@heroui/react";
-import Cookies from "js-cookie";
-import NextImage from "next/image";
-import React, { useEffect, useState } from "react";
-import imgHead from "../../../public/nevergivup.png";
 import Image from "next/image";
-import { useLoginUser } from "@/app/lib/auth";
+import React, { useEffect } from "react";
+import imgHead from "../../../public/nevergivup.png";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
 
 
@@ -57,6 +56,9 @@ useEffect(()=>{
             variant:"flat"
 
         })
+         setTimeout(()=>{
+            redirect("/dashboard")
+         },3000)
     }
 },[userData])
 
