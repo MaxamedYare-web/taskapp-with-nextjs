@@ -1,6 +1,5 @@
+import JWT from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
-import JWT from "jsonwebtoken"
-import { redirect } from "next/navigation";
 import prismadata from "./app/api/utils/prismadata";
 
 

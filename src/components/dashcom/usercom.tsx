@@ -1,10 +1,8 @@
 "use client"
-import Api from '@/app/lib/apidata'
-import React, { Suspense, useEffect, useState } from 'react'
-import useSWR from "swr"
+import { useUserDash } from '@/app/lib/userlib/user'
 import cookies from "js-cookie"
 import { redirect } from 'next/navigation'
-import { useUserDash } from '@/app/lib/userlib/user'
+import { Suspense, useEffect } from 'react'
 interface IuserProp {
   name: string
   email: string

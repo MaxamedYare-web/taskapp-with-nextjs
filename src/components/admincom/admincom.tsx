@@ -1,9 +1,11 @@
 "use client"
 import { useAdminAuth } from "@/app/lib/admin/adminauth"
-import { Spinner } from "@heroui/react"
+import { CircularProgress, Spinner } from "@heroui/react"
 import Cookies from "js-cookie"
 import { redirect } from "next/navigation"
 import { useEffect } from "react"
+import Headeradmin from "./headeradmin"
+import NavBarCom from "./navbar"
 
 export const AdminCom = ()=>{
     const {adminData,isloading,errorData,adminLog} = useAdminAuth()
@@ -31,8 +33,7 @@ export const AdminCom = ()=>{
   if(isloading){
     return (
         <div className="flex justify-center items-center h-screen">
-            <Spinner/>
-            <h1>Loading...</h1>
+            <CircularProgress size="lg" label="Loading..." />
         </div>
     )
   }
@@ -40,8 +41,12 @@ export const AdminCom = ()=>{
   if(adminData){
       return (
         <>
-        <div className="h-screen flex justify-center items-center">
-            <h1>Welcome admin page</h1>
+        <div className="flex flex-col">
+            <div className="flex flex-row  items-start">
+              <NavBarCom/>
+               <Headeradmin/>
+            </div>
+           
         </div>
         </>
     )
