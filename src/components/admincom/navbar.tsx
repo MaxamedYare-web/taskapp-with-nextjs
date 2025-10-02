@@ -1,5 +1,11 @@
-import { Link, Listbox, ListboxItem } from "@heroui/react";
+"use client"
+import { Link, Listbox, ListboxItem, Skeleton } from "@heroui/react";
+import { Ban, LayoutDashboard, Settings, Users } from "lucide-react";
+import {TbBrandBlogger} from "react-icons/tb"
+import { SiSpeedtest } from "react-icons/si";
+import { CgLogOut } from "react-icons/cg";
 import React from "react";
+import { logoutSer } from "@/app/action";
 
 export const AcmeLogo = () => {
   return (
@@ -14,25 +20,24 @@ export const AcmeLogo = () => {
   );
 };
 
-export default function App() {
+interface IpropFun {
+  isloading:any,
+  logout:()=> void
+}
+
+export default function NavBarCom({isloading,logout}:IpropFun) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
+console.log(isloading)
+
+const handleLogout = ()=>{
+  logoutSer()
+  logout()
+}
 
   return (
    <>
-   <div className="w-md bg-secondary-50 h-screen">
+   <div className="w-sm bg-secondary-50 h-screen">
    
    <main className="mt-5">
     <div>
@@ -42,11 +47,28 @@ export default function App() {
 
 {/* show dashboard */}
  <Listbox>
-    <ListboxItem>
-        Dashboard
+
+      <ListboxItem startContent={<LayoutDashboard/>} variant="shadow" color="primary">
+       <Skeleton isLoaded={isloading} className="font-bold text-md"> Dashboard</Skeleton>
     </ListboxItem>
-    <ListboxItem>
-        Users
+ 
+    <ListboxItem   startContent={<Users/>} color="primary" variant="shadow">
+       <Skeleton isLoaded={isloading} className="font-bold text-md"> Users</Skeleton>
+    </ListboxItem>
+    <ListboxItem startContent={<Ban/>} color="primary" variant="shadow">
+       <Skeleton isLoaded={Boolean(isloading)} className="font-bold text-md"> Banned User</Skeleton>
+    </ListboxItem>
+    <ListboxItem startContent={<TbBrandBlogger />} color="primary" variant="shadow">
+        <Skeleton isLoaded={isloading} className="font-bold text-md">Blogs</Skeleton>
+    </ListboxItem>
+    <ListboxItem startContent={<SiSpeedtest />} color="primary" variant="shadow">
+       <Skeleton isLoaded={isloading} className="font-bold text-md"> Testmonials</Skeleton>
+    </ListboxItem>
+    <ListboxItem startContent={<Settings />} color="primary" variant="shadow">
+       <Skeleton  isLoaded={isloading} className="font-bold text-md">Setting</Skeleton>
+    </ListboxItem>
+    <ListboxItem onClick={handleLogout} startContent={<CgLogOut />} color="danger" variant="shadow">
+       <Skeleton isLoaded={isloading} className="font-bold text-md">Logout</Skeleton>
     </ListboxItem>
  </Listbox>
 

@@ -2,18 +2,20 @@ import { redirect } from "next/navigation"
 import { useCallback, useState } from "react"
 import Api from "../apidata"
 
-
 export const useAdminAuth = ()=>{
     const [isloading,setIsloading] = useState<boolean>(false)
     const [adminData,setAdminData] = useState<any | null>(null)
     const [errorData,setErrorData] = useState<any | null>(null)
+   
 
  const adminLog = useCallback(async(token:string)=>{
-    setIsloading(true)
+    setIsloading(false)
     setErrorData(null)
     if(!token){
         redirect("/auth/login")
     }
+
+   
 
     try {
         const response = await Api.get("/admin")
@@ -25,7 +27,7 @@ export const useAdminAuth = ()=>{
         setAdminData(null)
         redirect("/dashboard")
     }finally{
-        setIsloading(false)
+        setIsloading(true)
     }
  },[])
 
