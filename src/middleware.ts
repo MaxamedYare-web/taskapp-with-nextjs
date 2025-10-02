@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import JWT from "jsonwebtoken"
 import { redirect } from "next/navigation";
+import prismadata from "./app/api/utils/prismadata";
 
 
 interface IpropTok{
@@ -23,7 +24,11 @@ try {
     const decoded = JWT.verify(authToken,String(process.env.JWT_SECRET))
     const reqHeaders = new Headers(req.headers)
     const userId = (decoded as IpropTok).id
+    const user = await (await prismadata()).user.findUnique({where:{id:Number(userId)}})
      reqHeaders.set("userDataId",userId)
+     if(pathname.startsWith("/api/admin") &&  user?.role !== "Admin"){
+        return NextResponse.json({success:false,error:"failed you are not admin, only allowed admim"},{status:401})
+     }
     return NextResponse.next({
         request:{
             headers:reqHeaders
@@ -36,5 +41,5 @@ try {
 }
 
 export const config = {
-    matcher:["/api/user:path*"]
+    matcher:["/api/user:path*","/api/admin:path*"]
 }

@@ -4,32 +4,43 @@ import React, { Suspense, useEffect, useState } from 'react'
 import useSWR from "swr"
 import cookies from "js-cookie"
 import { redirect } from 'next/navigation'
+import { useUserDash } from '@/app/lib/userlib/user'
 interface IuserProp {
   name: string
   email: string
   username:string
 }
 
-const fecherU = (url:string) => Api.get(url).then((res)=>res.data)
+
 
 const Usercom = () => {
   const token = cookies.get("userToken")
-
+  const {errors,isLoading,userData,userAccount} = useUserDash()
    useEffect(()=>{
     if(!token){
     redirect("/auth/login")
  }
+userAccount(token)
    },[token])
 
-  const {data,isLoading,error} =  useSWR("/user",fecherU)
 
+useEffect(()=>{
+  if(errors){
+    redirect("/auth/login")
+  }
+
+},[errors])
+
+if(userData){
+  console.log("userdata is:",userData)
+}
  
  
     return ( 
     <Suspense fallback={<h1>please wating there is loading</h1>}>
       <div>
         <h1>Welcome dashboard page</h1>
-        <p>Name:{data?.firstname}</p>
+        <p>Name:</p>
       </div>
     </Suspense>
       

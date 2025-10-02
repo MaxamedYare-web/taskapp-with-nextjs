@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import prismadata from "../../utils/prismadata";
+import prismadata from "../utils/prismadata";
+
 
 
 export async function GET(){
