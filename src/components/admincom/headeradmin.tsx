@@ -9,17 +9,32 @@ interface IpropHeader{
 const Headeradmin = ({isLoading,dataInfo}:IpropHeader) => {
 
 
-console.log(dataInfo)
+
 
   return (<div className='w-full p-3'>
       
       <div className='flex justify-between items-center bg-white p-3 rounded'>
-    <h1 className='text-2xl font-bold text-gray-700'>Welcome Back, Admin</h1>
-    <Profile className='font-semibold capitalize' name={dataInfo.adminData.username} description={`@${dataInfo.adminData.role} `}/>
+    <h1 className='text-2xl  font-bold text-gray-700'>Welcome Back, Admin</h1>
+
+{
+  !isLoading ? <div className="max-w-[300px] w-full flex items-center gap-3">
+      <div>
+        <Skeleton isLoaded={isLoading} className="flex rounded-full w-12 h-12" />
+      </div>
+      <div className="w-full flex flex-col gap-2">
+        <Skeleton isLoaded={isLoading} className="h-3 w-3/5 rounded-lg" />
+        <Skeleton isLoaded={isLoading} className="h-3 w-4/5 rounded-lg" />
+      </div>
+    </div> :  <Profile className='font-semibold capitalize'
+     name={dataInfo?.adminData?.username} 
+    description={`@${dataInfo?.adminData?.role} `}/>
+
+}
+    
       </div>
     <div className='flex w-full justify-around gap-2 mt-3'>
       
-       <Skeleton isLoaded={isLoading} className='w-full rounded-lg'>
+       <Skeleton  isLoaded={isLoading} className='w-full rounded-lg'>
    <Card className='w-full'>
     <CardHeader className='flex flex-col'>
        <div className='flex items-center gap-1'>

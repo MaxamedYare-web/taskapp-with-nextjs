@@ -4,6 +4,6 @@ import { cookies } from "next/headers"
 
 
 export const logoutSer = async()=>{
-  const remove = (await cookies()).delete("userToken")
+  (await cookies()).delete("userToken")
 revalidatePath("/")
 }
