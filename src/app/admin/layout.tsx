@@ -1,5 +1,6 @@
 
 import NavBarCom from '@/components/admincom/navbar'
+import { DataProvideContext } from '@/components/admincom/utils/contextProvider'
 import React from 'react'
 
 export default function layout({children}:{children:React.ReactNode}) {
@@ -11,7 +12,10 @@ export default function layout({children}:{children:React.ReactNode}) {
       >
      <div className="flex">
         <NavBarCom/>
-        {children}
+        <DataProvideContext>
+             {children}
+        </DataProvideContext>
+       
      </div>
       </body>
     </html>

@@ -32,10 +32,6 @@ export const AdminCom = ()=>{
     }
    },[errorData])
 
-
-
-
-
       return (
         <>
         <div className="flex w-full">
