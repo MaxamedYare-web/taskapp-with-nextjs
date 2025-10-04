@@ -1,4 +1,5 @@
 
+import HeaderNavBar from '@/components/admincom/headerNavBar'
 import NavBarCom from '@/components/admincom/navbar'
 import { DataProvideContext } from '@/components/admincom/utils/contextProvider'
 import React from 'react'
@@ -12,9 +13,12 @@ export default function layout({children}:{children:React.ReactNode}) {
       >
      <div className="flex">
         <NavBarCom/>
-        <DataProvideContext>
+       <div className='w-full'>
+        <HeaderNavBar/>
+     <DataProvideContext>
              {children}
         </DataProvideContext>
+       </div>
        
      </div>
       </body>
