@@ -18,6 +18,7 @@
     "@vercel/functions": "^3.1.0",
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.23.22",
     "ipinfo": "^1.5.1",
     "js-cookie": "^3.0.5",
