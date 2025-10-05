@@ -2,12 +2,13 @@
 
 import { useDataAdmin } from "./utils/contextProvider"
 import banerImg from "../../../public/intro01.png"
-import { Avatar, Button, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, User } from "@heroui/react"
+import { Avatar, Button, Card, CardHeader, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, User } from "@heroui/react"
 import { MdTask } from "react-icons/md"
 import { Clock, PersonStanding, User2 } from "lucide-react"
 import { SiTelegram, SiWhatsapp, SiYoutube } from "react-icons/si"
 import {formatDistance} from "date-fns"
 import { UserTasks } from "@/app/lib/admin/taskUser"
+import { userInfo } from "os"
 
 interface IpropDetails  {
     id:string,
@@ -28,7 +29,7 @@ interface IuDetal {
     const  {isOpen,onOpen,onOpenChange}= useDisclosure()
     const {userTask} = UserTasks(id)
    
-    console.log("user tasks is:",userTask)
+   
     if(isloading){
         return <h1>there is laoding</h1>
     }
@@ -38,8 +39,8 @@ interface IuDetal {
 
    if(dataInfo){
     const user:IuDetal[] =dataInfo.users
-    const userIfo = user.find((u)=>u.id == Number(id))
-    console.log(userIfo)
+    const userIfo = user?.find((u)=>u.id == Number(id))
+     console.log(user)
     return (<>
    
   <main className="p-3">
@@ -124,6 +125,14 @@ interface IuDetal {
         </main>
 
     </div>
+
+    {/* form */}
+    <Card className="mt-3">
+        <CardHeader className="flex flex-col items-start">
+            <h1 className="font-semibold">User Form</h1>
+            <p className="font-semibold text-gray-500">You can update this user information</p>
+        </CardHeader>
+    </Card>
 
  <Modal classNames={{
     backdrop:"bg-primary-500/30"

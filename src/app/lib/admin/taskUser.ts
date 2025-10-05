@@ -7,7 +7,7 @@ interface ItaskUser {
 }
 
 export const UserTasks = (id:string)=>{
-    console.log("id is:",id)
+ 
     const [userTask,setUserTask] = useState<any | null>(null)
     const [isloadingTask,setSloaingTask] = useState<boolean>(false)
 useEffect(()=>{
