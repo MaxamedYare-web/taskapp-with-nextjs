@@ -7,6 +7,7 @@ import { MdTask } from "react-icons/md"
 import { Clock, PersonStanding, User2 } from "lucide-react"
 import { SiTelegram, SiWhatsapp, SiYoutube } from "react-icons/si"
 import {formatDistance} from "date-fns"
+import { UserTasks } from "@/app/lib/admin/taskUser"
 
 interface IpropDetails  {
     id:string,
@@ -25,6 +26,9 @@ interface IuDetal {
  const UserDetails = ({id}:IpropDetails)=>{
     const {dataInfo,errorInfo,isloading} = useDataAdmin()
     const  {isOpen,onOpen,onOpenChange}= useDisclosure()
+    const {userTask} = UserTasks(id)
+   
+    console.log("user tasks is:",userTask)
     if(isloading){
         return <h1>there is laoding</h1>
     }
@@ -65,7 +69,7 @@ interface IuDetal {
                 {/* items1 */}
                 <div className="flex flex-col justify-center items-center">
                     <MdTask className="font-bold text-gray-500 text-2xl"/>
-                <h1 className="font-bold text-gray-600">3</h1>
+                <h1 className="font-bold text-gray-600">{userTask?.length}</h1>
                 <p className="font-semibold text-gray-500">Total Tasks</p>
                 </div>
                 {/* items1 */}
