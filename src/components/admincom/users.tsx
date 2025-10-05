@@ -21,11 +21,13 @@ interface IpropUser {
 export const UsrsCom = ()=>{
 const {isOpen,onOpen,onOpenChange} = useDisclosure()
 const {dataInfo,isloading,errorInfo} = useDataAdmin()
+const [selectUser,setSelectUser] = useState<IpropUser | null>(null)
+const [searchValue,setSearchValue]= useState<string>("")
 
 
 
-
-const users:IpropUser[] = dataInfo?.users
+const user:IpropUser[] = dataInfo?.users
+const users = user?.filter((u)=>u?.email?.includes(searchValue))
 const colums = [
     {
         key:"firstname",
@@ -62,11 +64,13 @@ const itemsUser = useMemo(()=>{
    return users?.slice(start,end)
 },[page,users])
 
+
+
 type User = (typeof users)[0]
 
 const handleDeleteClick =(user:IpropUser)=>{
 onOpen()
-console.log(user)
+setSelectUser(user)
 }
 
 const renderCell = useCallback((user:User,columkey:React.Key)=>{
@@ -105,7 +109,7 @@ const renderCell = useCallback((user:User,columkey:React.Key)=>{
                   <CiEdit />
                 </Tooltip>
                 <Tooltip color="danger" content="Delete User">
-                 <Button onPress={()=>handleDeleteClick(user)}> <RiDeleteBin6Line  className="text-danger"/></Button>
+                 <RiDeleteBin6Line onClick={()=>handleDeleteClick(user)} className="text-danger"/>
                   
               
                 </Tooltip>
@@ -124,6 +128,8 @@ if(!users || users.length == 0){
     return null
 }
 
+
+
    if(users){
      return (
        
@@ -133,6 +139,7 @@ if(!users || users.length == 0){
                 <div>
                     <Input placeholder="Searching" 
                     startContent={<Search/>}
+                    onChange={(e)=>setSearchValue(e.target.value)}
                     />
                 </div>
             </div>
@@ -176,17 +183,17 @@ if(!users || users.length == 0){
                     <ModalContent>
 {  (onClose)=>(
                        <>
-                       <ModalHeader>DELETE USER</ModalHeader>
+                       <ModalHeader>DELETE USER iD: {selectUser?.id}</ModalHeader>
                          <ModalBody>
                             <h1>Are you sure?</h1>
-                            <p>Do you want to delete this yes click if yes or click close if not,
-                                Node if you delete this user all data this user will Delete
+                            <p>Do you want to delete this <strong>{selectUser?.firstname}</strong> click if yes or click close if not,
+                                Note if you delete this user all data this user will be Delete
                                 you can ban and data will not delete
                             </p>
                          </ModalBody>
                          <ModalFooter>
                             <Button onPress={onClose}>Close</Button>
-                            <Button onPress={onClose}>Yes</Button>
+                            <Button onPress={onClose} color={"danger"}>Yes</Button>
                          </ModalFooter>
                          </>
                         )}
