@@ -15,17 +15,13 @@ import { TbBrandBlogger } from "react-icons/tb";
 export default function NavBarCom() {
 
 
-const {isloading} = useAdminAuth()
+
 
   const handleLogout = () => {
     logoutSer()
   }
 
-useEffect(()=>{
-  if(!isloading){
-  
-  }
-},[isloading])
+
 
 
 
@@ -40,7 +36,7 @@ useEffect(()=>{
           </div>
 
           {/* show dashboard */}
-          <Listbox aria-labelledby="list" aria-label="navbar list">
+          <Listbox aria-labelledby="list" >
 
             <ListboxItem textValue="dash" key={"dash"} href="/admin" startContent={<LayoutDashboard />} variant="shadow" color="primary">
               <Skeleton isLoaded={true} className="font-bold text-md"> Dashboard</Skeleton>

@@ -49,6 +49,7 @@ const userRole = [
     const {userTask} = UserTasks(id)
     const {isloadingUpdate,updateDate,updateDataUser,setUpdateData} = useUpdateUser()
     const [ispending,startTransition] = useTransition()
+    const [isBanned,setIsBanned] = useState<boolean | null>(null)
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>)=>{
        e.preventDefault()
@@ -64,7 +65,15 @@ const userRole = [
    
       startTransition(async()=>{
           const result =  await getAndBanUser(id, `/admin/users/${id}`)
-            console.log(result)
+         setIsBanned(result.data.banUser.banned)
+          addToast({
+            title:"User Account",
+            description:result.data.message,
+            color:"success",
+            timeout:5000,
+            shouldShowTimeoutProgress:true
+          })
+
         })
 
         
@@ -99,12 +108,28 @@ const userRole = [
     <div className="">
         <div className="w-full flex justify-between items-center bg-white rounded p-2">
             <h1 className="font-semibold">User Details</h1>
-            <Button onPress={onOpen} color={userIfo?.banned ? "danger" : "primary"}>{userIfo?.banned ? <div>
+            <Button onPress={onOpen} color={ isBanned == null ?  userIfo?.banned ? "danger" : "primary" : isBanned ? "danger" : "primary" }>
+             
+        
+                {
+                    isBanned == null ? 
+           ( userIfo?.banned ? <div>
                 {
                     ispending ? <div className="flex items-center"><Spinner color="warning" variant="simple"/> <h1>Opening account....</h1> </div> : 
                     <h1>Unban User</h1>
                 } 
-            </div> : "Ban User"}</Button>
+            </div> :
+            ispending ?  <div className="flex items-center"><Spinner color="warning" variant="simple"/> <h1>Banning....</h1> </div> :
+                    <h1>Ban User</h1>) : 
+                    isBanned ? (
+                         ispending ? <div className="flex items-center"><Spinner color="warning" variant="simple"/> <h1>Opening account....</h1> </div> : 
+                    <h1>Unban User</h1>
+                    ) :   ispending ?  <div className="flex items-center"><Spinner color="warning" variant="simple"/> <h1>Banning....</h1> </div> :
+                    <h1>Ban User</h1>
+
+             }
+             
+             </Button>
         </div>
         {/* header */}
         <div className="bg-gradient-to-tl mt-3 rounded relative from-secondary-500 h-80  flex justify-center items-center to-primary-500 w-full">

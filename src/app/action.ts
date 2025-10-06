@@ -7,6 +7,7 @@ import Api from "./lib/apidata"
 export const logoutSer = async()=>{
   (await cookies()).delete("userToken")
 revalidatePath("/")
+revalidatePath("/admin/users")
 }
 
 
@@ -27,7 +28,7 @@ revalidatePath("/")
             const data = await response.data
             revalidatePath(currentPath)
             revalidatePath("/")
-            return {success:true,data}
+            return {data}
         } catch (error) {
             console.log(error)
             return {success:false,error}
