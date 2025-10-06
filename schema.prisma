@@ -19,6 +19,7 @@ model User  {
   password String
   banned Boolean  @default(false)
   createdAt DateTime @default(now())
+  lastlogin DateTime @default(now())
   role Role @default(User)
   tasks Tasks[]
 }

@@ -5,9 +5,11 @@ interface IpropRegister {
     lastname:string,
     email:string,
     username:string,
-    password:string
+    password:string,
+    role: Role
 }
 
+type Role = "User" | "Admin"
 type stat = "pending" | "progress" | "complated"
 
 interface Itasks{

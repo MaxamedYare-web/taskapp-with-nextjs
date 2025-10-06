@@ -30,6 +30,7 @@ export async function POST(req:NextRequest){
         return NextResponse.json({error:"Password is error please try again"})
      }
     const token = generateToken(String(extisUser.id))
+     await user.update({where:{email:extisUser.email},data:{lastlogin:new Date().toISOString()}})
       return NextResponse.json({success:true,message:"successfully logged",token:token,role:extisUser.role})  
     } catch (error) {
         return NextResponse.json({error:`Network error please check you internet`},{status:400})

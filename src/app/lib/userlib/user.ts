@@ -1,17 +1,13 @@
 import { useCallback, useState } from "react"
 import Api from "../apidata"
-import { redirect } from "next/navigation"
 
 export const useUserDash = ()=>{
     const [isLoading,setIsloading] = useState<boolean>()
     const [errors,setErrors] = useState<any | null>(null)
     const [userData,setUserData] = useState<any | null >(null)
- const userAccount = useCallback(async(token:string)=>{
+ const userAccount = useCallback(async(_token:string)=>{
     setIsloading(true)
     setErrors(null)
-     if(!token){
-        redirect("/auth/login")
-     }
     try {
         const response = await Api.get("/user")
         const dataUser = response.data

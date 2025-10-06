@@ -11,7 +11,6 @@ interface IpropTok{
 export const runtime = "nodejs"
 export async function middleware(req:NextRequest){
     const pathname = req.nextUrl.pathname
-    console.log("pathname ka waa midkaan:",pathname)
 const authToken = req.headers.get("authorization")?.split(" ")[1]
 if(pathname.startsWith("/api/user") || pathname.startsWith("/api/admin")){
     try {
@@ -38,7 +37,7 @@ if(pathname.startsWith("/api/user") || pathname.startsWith("/api/admin")){
 }
 
 const token = (await cookies()).get("userToken")
-if(!token && pathname.startsWith("/admin") || pathname.startsWith("/dashboard")){
+if(!token && (pathname.startsWith("/admin") || pathname.startsWith("/dashboard"))){
   return NextResponse.redirect(new URL("/auth/login",req.url))
 }
 
@@ -46,9 +45,9 @@ if(!token && pathname.startsWith("/admin") || pathname.startsWith("/dashboard"))
 
 export const config = {
     matcher:[
-        "/api/user:path*",
-        "/api/admin:path*",
-        "/admin:path*",
-        "/dashboard:path*"
+        "/api/user/:path*",
+        "/api/admin/:path*",
+        "/admin/:path*",
+        "/dashboard/:path*"
     ]
 }

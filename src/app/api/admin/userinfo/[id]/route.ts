@@ -6,7 +6,7 @@ interface IpTas{
 }
 
 export async function GET(req:NextRequest,{params}:IpTas){
-    const {id} = params
+    const {id} = await params
     try {
  
         const {tasks} = await prismadata()

@@ -17,7 +17,7 @@ import React, { useEffect } from "react";
 import imgHead from "../../../public/nevergivup.png";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-
+import Cookies from "js-cookie"
 
 
 type Iurl = any
@@ -57,14 +57,24 @@ useEffect(()=>{
             variant:"flat"
 
         })
-         setTimeout(()=>{
+       console.log(userData)
             if(userData.role !== "Admin"){
                  redirect("/dashboard")
             }
-           redirect("/admin")
-         },2000)
+            if(userData.role == "Admin"){
+                redirect("/admin")
+            }
+            
     }
 },[userData])
+
+
+// useEffect(()=>{
+//     const token = Cookies.get("userToken")
+//     if(token){
+//     redirect("/dashboard")
+// }
+// },[])
 
 
     return (
@@ -108,8 +118,8 @@ useEffect(()=>{
                                     errorMessage="Please enter you password"
                                     
                                 />
-                                <Button color="primary" type="submit">{isLoading ? (<p className="flex gap-2 items-center"><Spinner color="white"
-                                               /> logining... </p>):"Login"}</Button>
+                                <Button color="primary" type="submit">{isLoading ? (<div className="flex gap-2 items-center"><Spinner color="white"
+                                               /> logining... </div>):"Login"}</Button>
                             </Form>
                         </CardBody>
                     </div>

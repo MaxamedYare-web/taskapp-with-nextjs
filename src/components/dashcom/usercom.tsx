@@ -35,12 +35,12 @@ if(userData){
  
  
     return ( 
-    <Suspense fallback={<h1>please wating there is loading</h1>}>
-      <div>
+  
+      <div className='flex justify-center items-center flex-col h-screen'>
         <h1>Welcome dashboard page</h1>
         <p>Name:</p>
       </div>
-    </Suspense>
+
       
     )
 }

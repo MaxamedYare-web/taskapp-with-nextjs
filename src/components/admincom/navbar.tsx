@@ -31,7 +31,7 @@ useEffect(()=>{
 
   return (
     <>
-      <div className="w-sm bg-secondary-50 h-screen">
+      <div className="w-sm bg-secondary-50 h-auto">
 
         <main className="mt-5">
           <div>
@@ -40,7 +40,7 @@ useEffect(()=>{
           </div>
 
           {/* show dashboard */}
-          <Listbox aria-labelledby="list">
+          <Listbox aria-labelledby="list" aria-label="navbar list">
 
             <ListboxItem textValue="dash" key={"dash"} href="/admin" startContent={<LayoutDashboard />} variant="shadow" color="primary">
               <Skeleton isLoaded={true} className="font-bold text-md"> Dashboard</Skeleton>

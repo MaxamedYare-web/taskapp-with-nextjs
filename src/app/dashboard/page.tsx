@@ -1,10 +1,5 @@
 import Usercom from "@/components/dashcom/usercom"
 
 
-const page = async() => {
-  
-    return <Usercom/>
- 
-}
-
+const page = ()=> { return (   <Usercom/>)}
 export default page
