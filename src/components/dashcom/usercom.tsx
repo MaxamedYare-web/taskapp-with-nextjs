@@ -24,7 +24,7 @@ userAccount(token)
 
 useEffect(()=>{
   if(errors){
-    redirect("/auth/login")
+    redirect("/dashboard/ban")
   }
 
 },[errors])

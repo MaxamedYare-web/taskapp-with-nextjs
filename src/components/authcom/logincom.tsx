@@ -57,24 +57,29 @@ useEffect(()=>{
             variant:"flat"
 
         })
-       console.log(userData)
+       if(userData.banned){
+        redirect("/dashboard/ban")
+       
+       }
             if(userData.role !== "Admin"){
                  redirect("/dashboard")
+                
             }
             if(userData.role == "Admin"){
                 redirect("/admin")
+               
             }
             
     }
 },[userData])
 
 
-// useEffect(()=>{
-//     const token = Cookies.get("userToken")
-//     if(token){
-//     redirect("/dashboard")
-// }
-// },[])
+useEffect(()=>{
+    const token = Cookies.get("userToken")
+    if(token){
+    redirect("/dashboard")
+}
+},[])
 
 
     return (
@@ -139,8 +144,8 @@ useEffect(()=>{
              backdrop-blur-[7px]
              w-full h-25 z-10 bottom-0">
                             <div className="flex flex-col justify-center gap-2 p-3 items-start h-[100%]">
-                                <p className="font-semibold text-white">if you don't have acccount please click login</p>
-                                <Button as={Link} href="/auth/login" color="default" variant="ghost"
+                                <p className="font-semibold text-white">if you don't have acccount please click Register</p>
+                                <Button as={Link} href="/auth/register" color="default" variant="ghost"
      className="font-bold text-secondary-50 hover:text-primary-500 p-4
                  ">Register</Button>
                             </div>

@@ -23,6 +23,9 @@ if(pathname.startsWith("/api/user") || pathname.startsWith("/api/admin")){
     const userId = (decoded as IpropTok).id
     const user = await (await prismadata()).user.findUnique({where:{id:Number(userId)}})
      reqHeaders.set("userDataId",userId)
+     if(user?.banned){
+        return NextResponse.json({success:false,error:"sorry you account has been suspended due violotion, contact us our support"},{status:400})
+     }
      if(pathname.startsWith("/api/admin") &&  user?.role !== "Admin"){
         return NextResponse.json({success:false,error:"failed you are not admin, only allowed admim"},{status:401})
      }
@@ -31,6 +34,8 @@ if(pathname.startsWith("/api/user") || pathname.startsWith("/api/admin")){
             headers:reqHeaders
         }
     })
+
+
 } catch (error) {
     return NextResponse.json({error:`there is error goood ${error}`})
 }
