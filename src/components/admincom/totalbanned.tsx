@@ -1,6 +1,7 @@
 "use client"
-import { getKeyValue, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
+import { getKeyValue, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, User } from "@heroui/react"
 import { useDataAdmin } from "./utils/contextProvider"
+import React, { useCallback } from "react"
 
 interface IbanUser {
     firstname:string,
@@ -44,6 +45,29 @@ if(!users){
     return <h1>user not found</h1>
 }
 
+type User = (typeof users)[0]
+
+const renderCeill = useCallback((user:User,columkey:React.Key)=>{
+
+const ceillValue = user[columkey as keyof User]
+
+switch(columkey){
+   case "firstname":
+       return (
+        <div>
+
+    <User
+    name={user.firstname}
+    description={user.email}
+    />
+
+        </div>
+       )
+}
+
+
+},[])
+
 
     return (
         <>
@@ -72,7 +96,7 @@ if(!users){
                   {
                     (item)=>(
                         <TableRow key={item.id}>
-                          {  (columkey)=> <TableCell>{getKeyValue(item,columkey)}</TableCell>
+                          {  (columkey)=> <TableCell>{renderCeill(item,columkey)}</TableCell>
                           }
                         </TableRow>
                     )
