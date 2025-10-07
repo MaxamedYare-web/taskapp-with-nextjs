@@ -57,13 +57,13 @@ useEffect(()=>{
             variant:"flat"
 
         })
-       if(userData.banned){
-        redirect("/dashboard/ban")
-       
-       }
+
+        if(userData.banned){
+            redirect("/dashboard/ban")
+        }
+    
             if(userData.role !== "Admin"){
-                 redirect("/dashboard")
-                
+                 redirect("/dashboard") 
             }
             if(userData.role == "Admin"){
                 redirect("/admin")

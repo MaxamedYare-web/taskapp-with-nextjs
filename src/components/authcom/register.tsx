@@ -16,6 +16,7 @@ import NextImage from "next/image";
 import React, { useEffect, useState } from "react";
 import imgHead from "../../../public/nevergivup.png";
 import { redirect } from "next/navigation";
+import Cookies from "js-cookie"
 
 
 const RegisterCom = () => {
@@ -58,6 +59,12 @@ useEffect(()=>{
     }
 },[userData])
 
+useEffect(()=>{
+    const token = Cookies.get("userToken")
+    if(token){
+    redirect("/dashboard")
+}
+},[])
 
   return (
     <div className="h-screen flex justify-center p-2  items-center">

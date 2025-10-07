@@ -45,7 +45,7 @@ export default function NavBarCom() {
             <ListboxItem textValue="user" key={"user"} href="/admin/users" startContent={<Users />} color="primary" variant="shadow">
               <Skeleton isLoaded={true} className="font-bold text-md"> Users</Skeleton>
             </ListboxItem>
-            <ListboxItem textValue="ban" key={"ban"} startContent={<Ban />} color="primary" variant="shadow">
+            <ListboxItem textValue="ban" href="/admin/usrsban" key={"ban"} startContent={<Ban />} color="primary" variant="shadow">
               <Skeleton isLoaded={true} className="font-bold text-md"> Banned User</Skeleton>
             </ListboxItem>
             <ListboxItem textValue="blog" key={"blog"} startContent={<TbBrandBlogger />} color="primary" variant="shadow">

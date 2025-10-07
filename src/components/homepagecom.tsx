@@ -125,7 +125,8 @@ const itesmsData:IitemPro[] = [
           <p className='font-medium text-gray-500'>{item.titleTop}</p>
           {item.titleHeader}
           <p className={`mt-2 md:${item.textSize} font-semibold text-gray-500 ${item.width}`}>{item.description}</p>
-       <Link className='bg-primary-500 p-2 flex justify-center items-center rounded text-secondary-50 mt-3 w-30 text-center font-bold'>Join Now</Link>
+       <Link href='/auth/register' className='bg-primary-500 p-2 flex justify-center items-center rounded text-secondary-50 mt-3 w-30 text-center
+        font-bold'>Join Now</Link>
         </div>
 
        <div className='relative'>
