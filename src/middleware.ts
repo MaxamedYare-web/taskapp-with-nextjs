@@ -87,6 +87,11 @@ if(!token && (pathname.startsWith("/admin") || pathname.startsWith("/dashboard")
 if(user?.role !=="Admin" && pathname.startsWith("/admin") ){
     return NextResponse.redirect(new URL("/dashboard",req.url))
 }
+if(user?.role =="Admin" && pathname.startsWith("/dashboard") ){
+    return NextResponse.redirect(new URL("/admin",req.url))
+}
+
+
 
 if(token && pathname.startsWith("/auth/register")){
     
