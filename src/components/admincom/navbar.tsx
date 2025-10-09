@@ -3,6 +3,7 @@ import { logoutSer } from "@/app/action";
 import { useAdminAuth } from "@/app/lib/admin/adminauth";
 import { Listbox, ListboxItem, Skeleton } from "@heroui/react";
 import { Ban, LayoutDashboard, Settings, Users } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CgLogOut } from "react-icons/cg";
 import { SiSpeedtest } from "react-icons/si";
@@ -14,20 +15,23 @@ import { TbBrandBlogger } from "react-icons/tb";
 
 export default function NavBarCom() {
 
-
+const [ref,setRef] = useState<boolean>(false)
 
 
   const handleLogout = () => {
+    setRef(!ref)
     logoutSer()
   }
 
-
+useEffect(()=>{
+console.log(ref)
+},[ref])
 
 
 
   return (
     <>
-      <div className="w-sm bg-secondary-50 h-auto">
+      <div className="w-sm bg-secondary-50 h-screen">
 
         <main className="mt-5">
           <div>
@@ -48,7 +52,7 @@ export default function NavBarCom() {
             <ListboxItem textValue="ban" href="/admin/usrsban" key={"ban"} startContent={<Ban />} color="primary" variant="shadow">
               <Skeleton isLoaded={true} className="font-bold text-md"> Banned User</Skeleton>
             </ListboxItem>
-            <ListboxItem textValue="blog" key={"blog"} startContent={<TbBrandBlogger />} color="primary" variant="shadow">
+            <ListboxItem href="/admin/blogs"  textValue="blog" key={"blog"} startContent={<TbBrandBlogger />} color="primary" variant="shadow">
               <Skeleton isLoaded={true} className="font-bold text-md">Blogs</Skeleton>
             </ListboxItem>
             <ListboxItem textValue="tes" key={"tes"} startContent={<SiSpeedtest />} color="primary" variant="shadow">

@@ -22,6 +22,7 @@ model User  {
   lastlogin DateTime @default(now())
   role Role @default(User)
   tasks Tasks[]
+  blogs Blogs[]
 }
 
 model Tasks {
@@ -36,6 +37,21 @@ model Tasks {
 
 }
 
+model Blogs {
+  id Int @id @default(autoincrement())
+  titile String
+  description String
+  createdAt DateTime @default(now())
+  updatedAt DateTime 
+  published Publish
+  avator String
+  authorId Int
+  category CateGory
+  author User @relation(fields:[authorId], references:[id])
+}
+
+
+
 enum Status {
   pending
   progress
@@ -45,4 +61,16 @@ enum Status {
 enum Role {
   Admin
   User
+}
+
+enum CateGory {
+  devlopment
+  crypto
+  learn
+  motivication
+}
+
+enum Publish {
+  published
+  draft
 }

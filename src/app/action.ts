@@ -8,6 +8,7 @@ export const logoutSer = async()=>{
   (await cookies()).delete("userToken")
 revalidatePath("/")
 revalidatePath("/admin/users")
+
 }
 
 

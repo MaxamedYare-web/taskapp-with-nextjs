@@ -22,6 +22,7 @@ userAccount(token)
    },[token])
 
 
+
 useEffect(()=>{
   if(errors){
     redirect("/dashboard/ban")
@@ -29,10 +30,14 @@ useEffect(()=>{
 
 },[errors])
 
+   if(isLoading){
+    return <h1>there is ladogn</h1>
+   }
+
 if(userData){
   console.log("userdata is:",userData)
 }
- 
+
  
     return ( 
   

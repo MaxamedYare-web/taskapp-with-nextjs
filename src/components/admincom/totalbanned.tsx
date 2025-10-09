@@ -1,51 +1,67 @@
 "use client"
-import { getKeyValue, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, User } from "@heroui/react"
+import { addToast, Button, getKeyValue, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, User } from "@heroui/react"
 import { useDataAdmin } from "./utils/contextProvider"
-import React, { useCallback } from "react"
+import React, { useCallback, useTransition } from "react"
+import { getAndBanUser } from "@/app/action"
 
 interface IbanUser {
     firstname:string,
     lastname:string,
     email:string,
     role:string,
-    id:string
+    id:string,
+    createdAt:string,
+    username:string
 }
 
 export const TotalBansUsers  = ()=>{
 
-
+const [isPendign,startTransition] = useTransition()
 const {dataInfo,isloading}  = useDataAdmin()
 const columns = [
     {
         key:"firstname",
-        label:"firstname"
+        label:"Name"
     },
     {
-        key:"lastname",
-        label:"lastname"
+        key:"createdAt",
+        label:"createdAt"
     },
     {
-        key:"email",
-        label:"email"
+        key:"username",
+        label:"Username"
     },
     {
         key:"role",
         label:"role"
     },
+    {
+        key:"action",
+        label:"action"
+    },
 ]
 
-if(isloading){
-    return <h1>there is laoding...</h1>
-}
+const handleOpenUserAccount = useCallback((id:string)=>{
+    startTransition(async()=>{
+        const result = await  getAndBanUser(id,"/admin/usrsban")
+        addToast({
+            title:"Successfully opened",
+            description:result.data.message,
+            timeout:3000,
+            shouldShowTimeoutProgress:true,
+            color:"success"
 
-const users:IbanUser[] = dataInfo?.users.filter((us:any)=>us.banned == true)
-console.log(users)
+        })
+        console.log(result.data.message)
+    })
+},[isPendign,startTransition])
 
-if(!users){
-    return <h1>user not found</h1>
-}
+
+
 
 type User = (typeof users)[0]
+
+
 
 const renderCeill = useCallback((user:User,columkey:React.Key)=>{
 
@@ -63,13 +79,36 @@ switch(columkey){
 
         </div>
        )
+    case "createdAt":
+        return <h1>{new Date(user.createdAt).toLocaleDateString()}</h1>
+     case "role":
+        return <h1>{user.role}</h1>
+    case "action":
+        return <Button onPress={()=>handleOpenUserAccount(user.id)} color="danger">{isPendign ? <div className="flex items-center">
+            <Spinner color="warning" /> <h1>Opening...</h1></div>:"UnBan"  }</Button>
+        case "username":
+            return <h1>{user.username}</h1>
+            default :
+            return ceillValue
+    }
+    
+},[isPendign,startTransition])
+
+
+if(isloading){
+    return <h1>there is laoding...</h1>
+}
+
+const users:IbanUser[] = dataInfo?.users.filter((us:any)=>us.banned == true)
+console.log(users)
+
+if(!users){
+    return <h1>user not found</h1>
 }
 
 
-},[])
-
-
-    return (
+  if(users){
+      return (
         <>
         <main className="p-3">
             <div className="bg-white p-2 rounded">
@@ -108,6 +147,9 @@ switch(columkey){
         
         </>
     )
+  }
+
+  return null
 }
 
 
