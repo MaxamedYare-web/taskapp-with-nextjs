@@ -27,7 +27,7 @@ export const AdminCom = ()=>{
 
    useEffect(()=>{
      if(errorData){
-    redirect("/dashboard")
+   console.log(errorData)
     
     }
    },[errorData])

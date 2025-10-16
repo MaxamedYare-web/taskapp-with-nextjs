@@ -31,7 +31,7 @@ useEffect(()=>{
 
 return(
      <div className='flex justify-between items-center m-3 bg-white p-3 rounded'>
-    <h1 className='text-2xl  font-bold text-gray-700'>Welcome Back, Admin</h1>
+    <h1 className='text-lg md:text-2xl  font-bold text-gray-700'>Welcome Back, Admin</h1>
 
 {
   !isloadin ? <div className="max-w-[300px] w-full flex items-center gap-3">

@@ -8,7 +8,7 @@ export async function GET(){
     try {
         const userId = (await headers()).get("userDataId")
         const {user,tasks} = await prismadata()
-        const adminData = await user.findUnique({where:{id:Number(userId)},omit:{id:true}})
+        const adminData = await user.findUnique({where:{id:Number(userId)},omit:{password:true,banned:true}})
         const users = await user.findMany({omit:{password:true}})
         const tasksData = await tasks.findMany()
         const usersData = {

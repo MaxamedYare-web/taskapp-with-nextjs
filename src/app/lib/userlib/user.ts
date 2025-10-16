@@ -23,8 +23,37 @@ export const useUserDash = ()=>{
  },[])
  return {isLoading,userAccount,errors,userData}
 
+}
+
+
+// update profile image
+export const uploadImageProfile = async (dataFile:any)=>{
+
+  
+const formData = new FormData()
+formData.append("file",dataFile)
+try {
+
+    const response = await Api.put("/user/upload",formData)
+    return response.data
+    
+} catch (error) {
+    return error
+}
 
 }
+
+
+// update prisma image avator 
+export const UpdateAvatorUser = async (data:{avator:string,id:string})=>{
+    try {
+        const res = await Api.put("/user/avator",data)
+        return res.data
+    } catch (error) {
+        return error
+    }
+}
+
 
 
 

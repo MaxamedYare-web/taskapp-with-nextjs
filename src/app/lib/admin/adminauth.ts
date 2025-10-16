@@ -30,7 +30,6 @@ export const useAdminAuth = ()=>{
     } catch (error) {
         setErrorData(errorData)
         setAdminData(null)
-        redirect("/dashboard")
     }finally{
         setIsloading(true)
         setLoadtData(false)

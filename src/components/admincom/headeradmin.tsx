@@ -1,5 +1,5 @@
 import { Card, CardHeader, User as Profile, Skeleton } from '@heroui/react';
-import { Ban, CircleCheckBig, UserPlus, Users } from "lucide-react";
+import { Ban, CircleCheckBig, ClipboardClock, UserPlus, Users } from "lucide-react";
 
 interface IpropHeader{
   isLoading:any,
@@ -14,9 +14,9 @@ const Headeradmin = ({isLoading,dataInfo}:IpropHeader) => {
   return (<div className='w-full p-3'>
       
     
-    <div className='flex w-full justify-around gap-2 mt-3'>
+    <div className='grid grid-cols-2 lg:flex w-full  justify-around gap-2 mt-3'>
       
-       <Skeleton  isLoaded={isLoading} className='w-full rounded-lg'>
+       <Skeleton  isLoaded={isLoading} className='w-full  rounded-lg'>
    <Card className='w-full'>
     <CardHeader className='flex flex-col'>
        <div className='flex items-center gap-1'>
@@ -62,6 +62,18 @@ const Headeradmin = ({isLoading,dataInfo}:IpropHeader) => {
        <div className='flex items-center gap-1'>
         <Ban className='font-bold text-gray-500'/>
          <h1 className='font-bold text-gray-500'>Total Banned</h1>
+       </div>
+        
+        <p className='font-bold'>0</p>
+    </CardHeader>
+  </Card>
+ </Skeleton>
+ <Skeleton isLoaded={isLoading} className='w-full rounded-lg'>
+   <Card className='w-full'>
+    <CardHeader className='flex flex-col'>
+       <div className='flex items-center gap-1'>
+        <ClipboardClock className='font-bold text-gray-500'/>
+         <h1 className='font-bold text-gray-500'>Pending</h1>
        </div>
         
         <p className='font-bold'>0</p>

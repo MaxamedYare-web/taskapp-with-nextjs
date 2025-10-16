@@ -20,6 +20,7 @@ model User  {
   banned Boolean  @default(false)
   createdAt DateTime @default(now())
   lastlogin DateTime @default(now())
+  avator String @default("")
   role Role @default(User)
   tasks Tasks[]
   blogs Blogs[]
@@ -42,9 +43,10 @@ model Blogs {
   titile String
   description String
   createdAt DateTime @default(now())
-  updatedAt DateTime 
+  updatedAt DateTime @default(now())
   published Publish
   avator String
+  delet_url_hash String @default("")
   authorId Int
   category CateGory
   author User @relation(fields:[authorId], references:[id])

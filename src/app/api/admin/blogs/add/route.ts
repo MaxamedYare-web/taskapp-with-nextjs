@@ -7,17 +7,18 @@ interface Iblogs {
     titile:string,
     description:string,
     category:cat,
-    avator:string
-    published:pub
+    avator:string,
+    published:pub,
+     delet_url_hash:string
 }
 export  async function POST(req:NextRequest){
 
-const {titile,description,category,avator,published}:Iblogs = await req.json()
+const {titile,description,category,avator,published, delet_url_hash}:Iblogs = await req.json()
 
 
 
 try {
-if(!titile || !description || !category || !avator){
+if(!titile || !description || !category || !avator || !delet_url_hash){
     return NextResponse.json({error:"All input is required"},{status:401})
 }
     const {user,blogs} = await prismadata()
@@ -30,7 +31,8 @@ const data  = {
     avator,
     createdAt: new Date().toISOString(),
     authorId: Number(admin?.id),
-    published
+    published:published,
+    delet_url_hash
 }
 
     const addBlog  = await blogs.create({data:data})

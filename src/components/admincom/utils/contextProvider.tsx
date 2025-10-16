@@ -3,9 +3,12 @@ import Api from "@/app/lib/apidata";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface dataContextType {
- dataInfo: any;
-  isloading: boolean;
-  errorInfo: any;
+ dataInfo: any
+  isloading: boolean
+  errorInfo: any
+   fetchBlogs:()=>void
+
+   refetchingAdminData : ()=>Promise<void>
 }
 
 const dataContext = createContext<dataContextType | undefined>(undefined);
@@ -28,8 +31,7 @@ export const DataProvideContext = ({
   const [isloading, setIsloading] = useState<boolean>(false);
   const [errorInfo, setErrorInfo] = useState<any | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
+   const fetchData = async () => {
       setIsloading(true);
       try {
         const response = await Api.get("/admin");
@@ -41,14 +43,31 @@ export const DataProvideContext = ({
         setIsloading(false)
       }
     };
+
+  useEffect(() => {
     fetchData()
   }, []);
 
 
+        const fetchBlogs = async()=>{
+          try {
+            const response = await Api.get("/admin/blogs")
+          const dataBlogs = await response.data
+          return dataBlogs
+          } catch (error) {
+            console.log("error with get blogs context",error)
+            return {error}
+          }
+        }
+      
+
   const value:dataContextType ={
    dataInfo,
    errorInfo,
-   isloading
+   isloading,
+   fetchBlogs,
+   refetchingAdminData:fetchData,
+
   }
 
   return <dataContext.Provider value={value}>

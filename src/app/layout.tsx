@@ -1,7 +1,8 @@
 "use client"
 import { HeroUIProvider, ToastProvider } from "@heroui/react";
 import "./globals.css";
-
+import 'rsuite/dist/rsuite-no-reset.min.css';
+import {CustomProvider} from "rsuite"
 
 export default function RootLayout({
   children,
@@ -28,7 +29,9 @@ export default function RootLayout({
     
   }} 
           />
-           {children}
+          <CustomProvider>
+             {children}
+          </CustomProvider>
         </HeroUIProvider>
        
       </body>

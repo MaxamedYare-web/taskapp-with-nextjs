@@ -1,5 +1,4 @@
 "use client"
-import { logoutSer } from "@/app/action";
 import { useAdminAuth } from "@/app/lib/admin/adminauth";
 import { Listbox, ListboxItem, Skeleton } from "@heroui/react";
 import { Ban, LayoutDashboard, Settings, Users } from "lucide-react";
@@ -8,30 +7,32 @@ import { useEffect, useState } from "react";
 import { CgLogOut } from "react-icons/cg";
 import { SiSpeedtest } from "react-icons/si";
 import { TbBrandBlogger } from "react-icons/tb";
-
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 
 
 
 export default function NavBarCom() {
+const router = useRouter()
 
-const [ref,setRef] = useState<boolean>(false)
 
 
   const handleLogout = () => {
-    setRef(!ref)
-    logoutSer()
+    const token = Cookies.remove("userToken")
+    if(!token!){
+       router.refresh()
+    }
+    
   }
 
-useEffect(()=>{
-console.log(ref)
-},[ref])
+
 
 
 
   return (
     <>
-      <div className="w-sm bg-secondary-50 h-screen">
+      <div className="w-sm bg-default-50 h-screen">
 
         <main className="mt-5">
           <div>
@@ -58,8 +59,8 @@ console.log(ref)
             <ListboxItem textValue="tes" key={"tes"} startContent={<SiSpeedtest />} color="primary" variant="shadow">
               <Skeleton isLoaded={true} className="font-bold text-md"> Testmonials</Skeleton>
             </ListboxItem>
-            <ListboxItem textValue="set" key={"set"} startContent={<Settings />} color="primary" variant="shadow">
-              <Skeleton isLoaded={true} className="font-bold text-md">Setting</Skeleton>
+            <ListboxItem href="/admin/setting" textValue="set" key={"set"} startContent={<Settings />} color="primary" variant="shadow">
+              <Skeleton isLoaded={true}  className="font-bold text-md">Setting</Skeleton>
             </ListboxItem>
             <ListboxItem textValue="log" onClick={handleLogout} key={"log"} startContent={<CgLogOut />} color="danger" variant="shadow">
               <Skeleton isLoaded={true} className="font-bold text-md">Logout</Skeleton>

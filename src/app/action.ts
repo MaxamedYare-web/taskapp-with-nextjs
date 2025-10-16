@@ -4,12 +4,7 @@ import { cookies } from "next/headers"
 import Api from "./lib/apidata"
 
 
-export const logoutSer = async()=>{
-  (await cookies()).delete("userToken")
-revalidatePath("/")
-revalidatePath("/admin/users")
 
-}
 
 
  export  const getAndBanUser = async (id:string,currentPath: string)=>{
@@ -18,9 +13,6 @@ revalidatePath("/admin/users")
             try {
        
               const token = (await cookies()).get("userToken")?.value
-           
-
-
             const response = await Api.put(`/admin/userinfo/ban/${id}`,{},{
               headers:{
                 "Authorization":`Bearer ${token}`

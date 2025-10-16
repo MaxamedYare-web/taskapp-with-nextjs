@@ -31,7 +31,6 @@ export async function POST(req:NextRequest){
     const salt = await bcrypt.genSalt(10)
     password =  bcrypt.hashSync(password,salt)
     const createAccount = await user.create({data:{email:email,firstname:firstname,lastname:lastname,username:username,password:password}})
-    console.log("create accouint data is",createAccount)
     if(createAccount){
  const token = generateToken(String(createAccount.id))
  return NextResponse.json({

@@ -10,7 +10,7 @@ export async function GET(req: NextRequest, _res: NextResponse) {
     const { user } = await prismadata();
     const account = await user.findUnique({
       where: { id: Number(userId) },
-      omit: { password: true , id:true},
+      omit: { password: true},
     });
 
     return NextResponse.json({success:true,account},{status:200});
