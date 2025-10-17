@@ -1,8 +1,7 @@
-import { Avatar,  Navbar, NavbarBrand, NavbarContent, NavbarItem, useDisclosure } from "@heroui/react"
+import { Avatar, Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react"
 import { MenuIcon } from "lucide-react"
 import Link from "next/link"
 import { Button } from "rsuite"
-import { useDataAdmin } from "../admincom/utils/contextProvider"
 
 
 interface IuserDash {
@@ -47,7 +46,7 @@ export const NavBarDash = ({userAccountData,onOpen}:{userAccountData: IuserDash,
                   {
                     userAccountData?.avator=="" ?  <Avatar/> : <Avatar isBordered size="md" color="success" src={userAccountData?.avator}/>
                   }
-                   <div className="leading-4">
+                   <div className="leading-4 hidden md:block">
                     <h1 className="capitalize font-semibold text-default-600">{userAccountData?.firstname}</h1>
                     <p className="text-default-500">{userAccountData?.email}</p>
                    </div>

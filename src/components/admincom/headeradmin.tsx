@@ -1,4 +1,4 @@
-import { Card, CardHeader, User as Profile, Skeleton } from '@heroui/react';
+import { Card, CardHeader, Skeleton } from '@heroui/react';
 import { Ban, CircleCheckBig, ClipboardClock, UserPlus, Users } from "lucide-react";
 
 interface IpropHeader{

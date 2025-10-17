@@ -1,15 +1,15 @@
 'use client'
 
-import { useDataAdmin } from "./utils/contextProvider"
-import banerImg from "../../../public/intro01.png"
-import { addToast, Avatar, Button, Card, CardBody, CardHeader, Form, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Spinner, useDisclosure, User } from "@heroui/react"
-import { MdTask } from "react-icons/md"
-import { Clock, Eye, EyeClosed, EyeOff, PersonStanding, User2 } from "lucide-react"
-import { SiTelegram, SiWhatsapp, SiYoutube } from "react-icons/si"
-import {formatDistance} from "date-fns"
 import { UserTasks } from "@/app/lib/admin/taskUser"
-import { useEffect, useState, useTransition } from "react"
 import useUpdateUser from "@/app/lib/admin/updateUser"
+import { addToast, Avatar, Button, Card, CardBody, CardHeader, Form, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Spinner, useDisclosure } from "@heroui/react"
+import { formatDistance } from "date-fns"
+import { Clock, Eye, EyeOff, User2 } from "lucide-react"
+import { useState, useTransition } from "react"
+import { MdTask } from "react-icons/md"
+import { SiTelegram, SiWhatsapp, SiYoutube } from "react-icons/si"
+import banerImg from "../../../public/intro01.png"
+import { useDataAdmin } from "./utils/contextProvider"
 
 import { getAndBanUser } from "@/app/action"
 

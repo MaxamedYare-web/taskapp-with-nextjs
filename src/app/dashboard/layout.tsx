@@ -1,11 +1,10 @@
 "use client"
 import { NavBarDash } from "@/components/dashcom/navbardash";
 import { SideBarDash } from "@/components/dashcom/sidebar";
-import { useUserDash } from "../lib/userlib/user";
+import { useDisclosure } from "@heroui/react";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
-import { CustomProvider } from "rsuite";
-import { useDisclosure } from "@heroui/react";
+import { useUserDash } from "../lib/userlib/user";
 
 interface IuserDash {
   avator:string,

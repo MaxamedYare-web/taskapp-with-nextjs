@@ -1,13 +1,12 @@
 "use client"
 
-import { useAdminAuth } from "@/app/lib/admin/adminauth"
-import { Button, getKeyValue, Input, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, useDisclosure, User } from "@heroui/react"
-import { Delete, Edit, Eye, Search } from "lucide-react"
-import { useDataAdmin } from "./utils/contextProvider"
+import { Button, Input, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, useDisclosure, User } from "@heroui/react"
+import { Search } from "lucide-react"
 import { useCallback, useMemo, useState } from "react"
-import { CiEdit } from "react-icons/ci";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { CiEdit } from "react-icons/ci"
+import { MdOutlineRemoveRedEye } from "react-icons/md"
+import { RiDeleteBin6Line } from "react-icons/ri"
+import { useDataAdmin } from "./utils/contextProvider"
 
 interface IpropUser {
     firstname:string,

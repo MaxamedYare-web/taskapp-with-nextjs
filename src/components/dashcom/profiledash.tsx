@@ -100,8 +100,11 @@ return (
         <Form className="grid grid-cols-2">
             <div className="flex flex-col gap-3 relative items-center bg-gradient-to-tl from-warning-500 to-secondary-500 shadow rounded pt-10 shadow-primary-500 justify-center col-span-2">
               {
-            userProfileInfgo?.avator == "" ? <Avatar size="lg"/> : isPendingUpload ? <Avatar size="md" color="warning"  icon={<Spinner variant="simple" color="primary"/>}/>:
-             isPendingAvator ? <Avatar size="md" color="warning"  icon={<Spinner variant="simple" color="primary"/>}/> : <Avatar isBordered size="lg" color="success" src={userProfileInfgo?.avator}/>
+            userProfileInfgo?.avator == "" ? <Avatar size="lg"/> : isPendingUpload ? 
+            <Avatar size="md" color="warning"  icon={<Spinner variant="simple" color="primary"/>}/>:
+             isPendingAvator ? <Avatar size="md" color="warning" 
+              icon={<Spinner variant="simple" color="primary"/>}/> : 
+              <Avatar isBordered size="lg" color="success" src={userProfileInfgo?.avator}/>
         }
         <Input onChange={handleChangeFile} id="file" className="hidden" type="file"/>
            
@@ -120,7 +123,7 @@ return (
             <Input label="Email Address" name="email" value={userProfileInfgo?.email}/>
             <Input label="You WhatsApp" name="whatsapp" />
             <Input label="You Telegram" name="telegram" />
-            <Button color="primary" variant="shadow" className="w-1/3">Update Profile</Button>
+            <Button color="primary" variant="shadow" className="md:w-1/3">Update Profile</Button>
            </div>
         </Form>
     </CardBody>

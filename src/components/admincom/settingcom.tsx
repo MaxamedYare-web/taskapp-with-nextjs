@@ -1,13 +1,12 @@
 
 "use client"
 
-import { addToast, Avatar, Button, Card, CardBody, CardFooter, CardHeader, Form, Input, Link, Skeleton, Spinner, User } from "@heroui/react"
-import { Camera, Eye, EyeClosed } from "lucide-react"
-import { useDataAdmin } from "./utils/contextProvider"
-import React, { useEffect, useState, useTransition } from "react"
-import useUploadImage from "@/app/lib/admin/upload"
 import { ChangePassword, UpdateFormDataAdmin, UpdateProfileImage } from "@/app/lib/admin/updateProfile"
-import { useRouter } from "next/navigation"
+import useUploadImage from "@/app/lib/admin/upload"
+import { addToast, Avatar, Button, Card, CardBody, CardFooter, CardHeader, Form, Input, Link, Skeleton, Spinner } from "@heroui/react"
+import { Camera, Eye, EyeClosed } from "lucide-react"
+import React, { useEffect, useState, useTransition } from "react"
+import { useDataAdmin } from "./utils/contextProvider"
 
 export default function SettingCom() {
     const { dataInfo, isloading, refetchingAdminData } = useDataAdmin()
