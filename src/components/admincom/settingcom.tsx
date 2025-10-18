@@ -65,7 +65,7 @@ export default function SettingCom() {
         })
 
 
-    }, [avatorLink])
+    }, [avatorLink,dataInfo?.adminData?.id,refetchingAdminData])
 
     // handle form input data
     const HandleSubmitFormUpdate = (e: React.FormEvent<HTMLFormElement>) => {

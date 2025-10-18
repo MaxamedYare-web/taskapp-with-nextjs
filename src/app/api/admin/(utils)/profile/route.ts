@@ -20,7 +20,7 @@ export async function PUT(req:NextRequest){
         return NextResponse.json({message:"Successfully you profile image was updated"})
         
     } catch (error) {
-        return NextResponse.json({error:"updated with profile image was failed"})
+        return NextResponse.json({error:`updated with profile image was failed ${(error as Error).message}`})
     }
 
 }

@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react"
 import Api from "../apidata"
 
-interface ItaskUser {
-    dataTask:any,
-    err?:any
-}
+
 
 export const UserTasks = (id:string)=>{
  
@@ -24,7 +21,7 @@ useEffect(()=>{
         }
     }
     fetchTasks()
-},[])
+},[id])
 
 return {userTask,isloadingTask}
 

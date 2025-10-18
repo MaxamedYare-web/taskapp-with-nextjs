@@ -47,7 +47,7 @@ if(isPending){
        <Skeleton className="mt-5 rounded-full w-50"> <Button size="lg" href="/" as={Link} color="primary" className="text-2xl mt-2">Go Home</Button></Skeleton>
         
     </div>
-    <Skeleton> <Image src={banImage.src}/></Skeleton>
+    <Skeleton> <Image src={banImage.src} alt="ban image load"/></Skeleton>
 
 
            </div>
@@ -64,7 +64,7 @@ if(isPending){
          <p className="max-w-100 font-bold mt-2 text-gray-500">{banData}</p>
          <Button size="lg" href="/" as={Link} color="primary" className="text-2xl mt-2">Go Home</Button>
     </div>
- <Image src={banImage.src}/>
+ <Image src={banImage.src} alt="ban image"/>
 
            </div>
 

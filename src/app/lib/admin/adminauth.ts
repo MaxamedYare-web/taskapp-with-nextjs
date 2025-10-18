@@ -28,7 +28,7 @@ export const useAdminAuth = ()=>{
         setErrorData(null)
        
     } catch (error) {
-        setErrorData(errorData)
+        setErrorData(error)
         setAdminData(null)
     }finally{
         setIsloading(true)

@@ -53,7 +53,7 @@ useEffect(()=>{
         })
   
     })
-},[])
+},[fetchBlogs,id])
 
 if(isPending){
     return <div><h1>Pending...</h1></div>
@@ -156,7 +156,7 @@ return (
                          </label>
                         }
                           
-                         <Image className="w-20 h-10 rounded" src={avatorUpdate?.display_url ? avatorUpdate.display_url : singleBlog?.avator}/>
+                         <Image alt="update image" className="w-20 h-10 rounded" src={avatorUpdate?.display_url ? avatorUpdate.display_url : singleBlog?.avator}/>
                        </div>
                          <Select
                          name="status"

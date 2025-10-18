@@ -56,5 +56,32 @@ export const UpdateAvatorUser = async (data:{avator:string,id:string})=>{
 
 
 
+// test
+
+export const ExhangeFormUpload = async(file:File)=>{
+    const apu_url = process.env.NEXT_PUBLIC_URL_IMG as string
+   
+
+const formFile = new FormData()
+formFile.append("image",file)
+
+try {
+
+    const response = await fetch(apu_url,{
+        method:"POST",
+        body:formFile
+    })
+    const data = await response.json()
+    return data.data.display_url
+    
+} catch (error) {
+   console.log(error)
+}
+
+}
+
+
+
+
 
 

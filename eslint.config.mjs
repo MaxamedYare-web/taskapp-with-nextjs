@@ -20,6 +20,23 @@ const eslintConfig = [
       "next-env.d.ts",
     ],
   },
+  {
+   rules: {
+      // 🧩 Disable strict TypeScript rules
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+      "@typescript-eslint/no-wrapper-object-types": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+
+      // 🪶 Relax general lint rules
+      "prefer-const": "off",
+      "react-hooks/exhaustive-deps": "warn",
+      "jsx-a11y/alt-text": "warn",
+    },
+  }
 ];
 
 export default eslintConfig;

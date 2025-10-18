@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 
  const HeaderNavBar =()=>{
     const [adminInfo,setAdminInfo] = useState<any | null>(null)
-    const [errorInfo,setErrorInfo] = useState<any | null>(null)
+    const [setErrorInfo] = useState<any | null>(null)
     const [isloadin,setisloadin] = useState<boolean>(false)
 
 useEffect(()=>{
@@ -25,7 +25,7 @@ useEffect(()=>{
         }
     }
     dataUser()
-},[])
+})
 
 
 

@@ -2,9 +2,6 @@ import JWT from "jsonwebtoken"
 
 
 
-interface IpropToken {
-   id:string
-}
 
 export async function AuthProtect(req:any):Promise<boolean>{
  const token = req.cookies.get("userToken")
@@ -13,7 +10,7 @@ export async function AuthProtect(req:any):Promise<boolean>{
       return false
    }
        const JWT_SECRET = process.env.JWT_SECRET as string
-    const tokenID = JWT.verify(token.value,JWT_SECRET)
+    JWT.verify(token.value,JWT_SECRET)
     return true
    } catch (error) {
     console.log(`failed you token expired or not found please try to login ${(error as Error).message}`)

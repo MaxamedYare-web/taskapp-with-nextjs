@@ -1,11 +1,10 @@
 import prismadata from "@/app/api/utils/prismadata";
 import { NextRequest, NextResponse } from "next/server";
 
-interface IbanUser {
-    params:{id:string}
-}
-export async function PUT(_req:NextRequest,{params}:IbanUser){
-    const {id} = await params
+
+export async function PUT(_req:NextRequest,context:{params:{id:string} | Promise<{id:string}>}){
+   const params = await context.params
+  const {id} = params
 
   try {
 

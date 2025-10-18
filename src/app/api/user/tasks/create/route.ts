@@ -21,7 +21,7 @@ export async function POST(req:NextRequest){
     const taskUser = await user.findUnique({where:{id:Number(userStor.id)}})
     const {tasks} = await prismadata()
 
-      const taskData:Itasks = {
+      const taskData = {
         title ,
         description,
         status,

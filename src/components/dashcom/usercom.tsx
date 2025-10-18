@@ -1,13 +1,5 @@
 "use client"
-import { useUserDash } from '@/app/lib/userlib/user'
-import cookies from "js-cookie"
-import { redirect } from 'next/navigation'
-import { Suspense, useEffect } from 'react'
-interface IuserProp {
-  name: string
-  email: string
-  username: string
-}
+
 
 
 

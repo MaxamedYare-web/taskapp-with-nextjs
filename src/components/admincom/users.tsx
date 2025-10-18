@@ -2,7 +2,7 @@
 
 import { Button, Input, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, useDisclosure, User } from "@heroui/react"
 import { Search } from "lucide-react"
-import { useCallback, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { CiEdit } from "react-icons/ci"
 import { MdOutlineRemoveRedEye } from "react-icons/md"
 import { RiDeleteBin6Line } from "react-icons/ri"
@@ -72,7 +72,7 @@ onOpen()
 setSelectUser(user)
 }
 
-const renderCell = useCallback((user:User,columkey:React.Key)=>{
+const renderCell = ((user:User,columkey:React.Key)=>{
   const cellValue = user[columkey as keyof User]
 
   switch(columkey){
@@ -117,7 +117,7 @@ const renderCell = useCallback((user:User,columkey:React.Key)=>{
         )
   }
 
-},[])
+})
 
 if(isloading){
     return <h1>laoding</h1>

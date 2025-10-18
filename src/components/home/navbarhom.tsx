@@ -20,12 +20,12 @@ interface IuserDash {
 const NavBarHome = ()=>{
 
 const token = Cookies.get("userToken")
-const {errors,isLoading,userAccount,userData} = useUserDash()
+const {isLoading,userAccount,userData} = useUserDash()
 
 
 useEffect(()=>{
     userAccount(String(token))
-},[token])
+},[token,userAccount])
 
 
 
@@ -38,7 +38,7 @@ useEffect(()=>{
 if(isLoading){
     return  <Navbar className="bg-gradient-to-bl from-primary-500/70 to-secondary-500/70 text-white">
         <NavbarBrand >
-           <Image className="w-50 h-30"  src={logoImg.src}/>
+           <Image alt="main logo" className="w-50 h-30"  src={logoImg.src}/>
         </NavbarBrand>
         <NavbarContent  className="hidden sm:flex" justify="center">
             <NavbarItem>
@@ -80,7 +80,7 @@ if(isLoading){
 return(
     <Navbar className="bg-gradient-to-bl from-primary-500/70 to-secondary-500/70 text-white">
         <NavbarBrand >
-           <Image className="w-50 h-30"  src={logoImg.src}/>
+           <Image alt="main logo two" className="w-50 h-30"  src={logoImg.src}/>
         </NavbarBrand>
         <NavbarContent  className="hidden sm:flex" justify="center">
             <NavbarItem>

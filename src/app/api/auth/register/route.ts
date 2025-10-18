@@ -6,7 +6,7 @@ import generateToken from "../../utils/generatetoken";
 
 export async function POST(req:NextRequest){
 
-    let {firstname,lastname,username,email,password}:IpropRegister = await req.json()
+    let {firstname,lastname,username,email,password}= await req.json()
    try {
      if(!firstname){
         return NextResponse.json({error:"Firstname is required please put you name"},{status:400})
@@ -42,7 +42,7 @@ export async function POST(req:NextRequest){
     }
    } catch (error) {
     const err = (error as Error).message
-    return NextResponse.json({error:`Network failed please check you interner`},{status:500})
+    return NextResponse.json({error:`Network failed please check you interner ${err}`},{status:500})
    }
 
 }

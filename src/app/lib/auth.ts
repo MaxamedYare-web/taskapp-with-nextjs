@@ -15,7 +15,7 @@ export function useLoginUser() {
       const response = await Api.post("/auth/login", data);
       const dataUser = await response.data;
       if (dataUser.token) {
-        const cookData = Cookies.set("userToken", dataUser.token, {
+         Cookies.set("userToken", dataUser.token, {
           expires: 7,
         });
 

@@ -2,12 +2,13 @@ import prismadata from "@/app/api/utils/prismadata"
 import { NextRequest, NextResponse } from "next/server"
 
 
-interface IdelBlog{
-    params:{id:string}
-}
 
-export async function DELETE(_req:NextRequest,{params}:IdelBlog){
-const {id} = await params
+export async function DELETE(_req:NextRequest,context:{params:{id:string} | Promise<{id:string}>}){
+
+    const params = await context.params
+    const {id} = params
+
+
 
 try {
 

@@ -29,7 +29,7 @@ try {
      return NextResponse.json({success:true,message:"You Password was changed successfully"})
     
 } catch (error) {
-    return NextResponse.json({error:"There is error with change password"})
+    return NextResponse.json({error:`There is error with change password ${(error as Error).message}`})
 }
 
 

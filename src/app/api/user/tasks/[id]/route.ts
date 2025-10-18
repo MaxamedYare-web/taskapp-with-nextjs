@@ -1,10 +1,11 @@
 import prismadata from "@/app/api/utils/prismadata";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(req:NextRequest,{params}:{params:Promise<{id:number}>}){
+export async function PUT(req:NextRequest,context:{params:{id:string} | Promise<{id:string}>}){
   const {title,description,status} = await req.json()
 try {
-      const {id} = await params
+  const params = await context.params
+      const {id} =  params
     if(!title && !description && !status){
         return NextResponse.json({error:"All input is required please fill"},{status:401})
     }

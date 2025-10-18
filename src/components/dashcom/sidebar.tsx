@@ -5,7 +5,7 @@ import { MdDashboard } from "react-icons/md"
 
 
 export const 
-SideBarDash = ({isOpen,onOpenChange}:{isOpen:boolean,onOpenChange:()=>void})=>{
+SideBarDash = ({isOpen,onOpenChange,logout}:{isOpen:boolean,onOpenChange:()=>void,logout:()=>void})=>{
 
 
 
@@ -48,7 +48,7 @@ return (
                </DrawerBody>
                <DrawerFooter>
                   <Button onPress={onClose}>Close</Button>
-                  <Button color="danger" variant="flat">Logout</Button>
+                  <Button onPress={logout} color="danger" variant="flat">Logout</Button>
                </DrawerFooter>
                </>
                

@@ -107,6 +107,7 @@ if(user?.banned && !pathname.startsWith("/dashboard/ban")){
  }
 
     } catch (error) {
+        console.log(error)
         if(!pathname.startsWith("/auth/login")){
             return NextResponse.redirect(new URL("/auth/login",req.url))
         }

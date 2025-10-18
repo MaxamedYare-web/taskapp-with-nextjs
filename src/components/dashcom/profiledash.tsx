@@ -1,9 +1,8 @@
 import { UpdateAvatorUser, uploadImageProfile } from "@/app/lib/userlib/user"
 import { addToast, Avatar, Button, Card, CardBody, CardHeader, Form, Input, Spinner } from "@heroui/react"
-import { Upload } from "lucide-react"
-import { useRouter } from "next/navigation"
-import React, { useEffect, useState, useTransition } from "react"
 import Cookies from "js-cookie"
+import { Upload } from "lucide-react"
+import React, { useEffect, useState, useTransition } from "react"
 
 
 interface IuserDash {
@@ -18,7 +17,7 @@ interface IuserDash {
   id:string
 }
 
-export const ProfileDash = ({userProfileInfgo,loading,userAccount}:{userProfileInfgo:IuserDash,loading:boolean,userAccount:any})=>{
+export const ProfileDash = ({userProfileInfgo,_loading,userAccount}:{userProfileInfgo:IuserDash,_loading:boolean,userAccount:any})=>{
 
     const [isPendingUpload,startTransitionUplod] = useTransition()
     const [isPendingAvator,startTransitionAvator] = useTransition()
@@ -45,6 +44,9 @@ const handleChangeFile = (e:React.ChangeEvent<HTMLInputElement>)=>{
 }
 
 useEffect(()=>{
+    if(!avatorLink){
+        return 
+    }
 
     if(avatorLink){
         const avatorAndId = {
@@ -67,7 +69,7 @@ useEffect(()=>{
     }
 
 
-},[avatorLink])
+},[avatorLink,userProfileInfgo?.id,userAccount])
 
 return (
     <>

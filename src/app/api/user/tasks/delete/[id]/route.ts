@@ -1,12 +1,11 @@
 import prismadata from "@/app/api/utils/prismadata";
 import { NextRequest, NextResponse } from "next/server";
 
-interface Iprops {
-    params:{id:string}
-}
 
-export async function DELETE(_req:NextRequest,{params}:Iprops){
- const {id} = params
+
+export async function DELETE(_req:NextRequest,context:{params:{id:string} | Promise<{id:string}>}){
+ const params = await context.params
+    const {id} = params
     try {
         const {tasks} = await prismadata()
         const delTask = await tasks.delete({where:{id:Number(id)}})

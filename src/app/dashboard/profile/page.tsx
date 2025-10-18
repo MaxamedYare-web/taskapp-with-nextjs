@@ -19,15 +19,15 @@ interface IuserDash {
 
 export default function ProfilePage (){
 
-const {errors,isLoading,userAccount,userData} = useUserDash()
+const {isLoading,userAccount,userData} = useUserDash()
 
 const token = Cookies.get("userToken") as string
 useEffect(()=>{
 userAccount(token)
-},[token])
+},[token,userAccount])
 
 const userInfo:IuserDash = userData?.account
-    return <ProfileDash userAccount={userAccount} loading={Boolean(isLoading)}  userProfileInfgo={userInfo} />
+    return <ProfileDash userAccount={userAccount} _loading={Boolean(isLoading)}  userProfileInfgo={userInfo} />
 }
 
 

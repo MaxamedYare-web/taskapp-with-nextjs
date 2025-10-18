@@ -54,7 +54,7 @@ const handleOpenUserAccount = useCallback((id:string)=>{
         })
         console.log(result.data.message)
     })
-},[isPendign,startTransition])
+},[startTransition])
 
 
 
@@ -92,7 +92,7 @@ switch(columkey){
             return ceillValue
     }
     
-},[isPendign,startTransition])
+},[isPendign,handleOpenUserAccount])
 
 
 if(isloading){

@@ -1,9 +1,9 @@
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import prismadata from "../utils/prismadata";
-import { cookies, headers } from "next/headers";
 
 
-export async function GET(req: NextRequest, _res: NextResponse) {
+export async function GET(_req: NextRequest) {
  
   try {
   const userId = (await headers()).get("userDataId")

@@ -3,13 +3,15 @@ import { blogDelAction } from "@/actions/blogdelete"
 import { AddBlogs, getBlogs } from "@/app/lib/admin/blogs"
 import useUploadImage from "@/app/lib/admin/upload"
 import { Button } from "@heroui/button"
-import { addToast, Chip, Form, Image, Input, Modal, ModalBody, 
-  ModalContent, ModalFooter, ModalHeader, Pagination, Select, SelectItem, Spinner, 
+import {
+  addToast, Chip, Form, Image, Input, Modal, ModalBody,
+  ModalContent, ModalFooter, ModalHeader, Pagination, Select, SelectItem, Spinner,
   Table, TableBody, TableCell, TableColumn, TableHeader,
-   TableRow, Textarea, useDisclosure, User } from "@heroui/react"
+  TableRow, Textarea, useDisclosure
+} from "@heroui/react"
 import { formatDistance } from "date-fns"
 
-import { Delete, DeleteIcon, Edit, Trash, Upload } from "lucide-react"
+import { Edit, Trash, Upload } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react"
@@ -226,7 +228,7 @@ const blogCeil = useCallback((blog:IGetBlogs,columkey:React.Key)=>{
     case "info" :
       return (
         <div className="flex items-center gap-2">
-          <Image className="w-15 h-10 rounded" src={blog.avator}/>
+          <Image alt="blog image" className="w-15 h-10 rounded" src={blog.avator}/>
           <article>
             <h1 className="font-semibold text-[15px] capitalize text-default-500">{blog.titile}</h1>
            
@@ -277,7 +279,7 @@ useEffect(()=>{
     router.refresh()
   }
 
-},[isDeleted])
+},[isDeleted,router])
 
 
 
@@ -290,7 +292,7 @@ const itemsBlog = useMemo(()=>{
   const start = (currentPage - 1) * pagePerRows
   const end = start + pagePerRows
   return blogData?.slice(start,end)
-},[currentPage,blogData,isDeleted])
+},[currentPage,blogData])
 
 
 if(isPendingGetBlogs){
@@ -520,7 +522,7 @@ if(!itemsBlog || itemsBlog?.length === 0){
                       </label>
                       }
                       {
-                        avatorLink && <Image className="w-20 h-13 rounded" alt="prev" src={avatorLink.display_url}/>
+                        avatorLink && <Image  className="w-20 h-13 rounded" alt="prev" src={avatorLink.display_url}/>
                      
                       }
                      

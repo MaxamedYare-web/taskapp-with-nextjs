@@ -17,10 +17,11 @@ interface Iblogs {
      delet_url_hash:string
 }
 
-export async function PUT(req:NextRequest,{params}:IupdateBlogApi){
+export async function PUT(req:NextRequest,context:{params:{id:string} | Promise<{id:string}>}){
 
 const {titile, description,published, avator,category,delet_url_hash}:Iblogs = await req.json()
-const {id} = await params
+const params = await context.params
+const {id} =  params
 
 try {
 

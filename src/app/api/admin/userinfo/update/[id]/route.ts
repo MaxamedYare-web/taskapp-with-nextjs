@@ -1,16 +1,14 @@
 import prismadata from "@/app/api/utils/prismadata";
 import { NextRequest, NextResponse } from "next/server";
 import * as bcrypt from 'bcrypt';
-interface IupUser{
-    params:{
-        id:string
-    }
-}
 
-export async function PUT(req:NextRequest,{params}:IupUser){
 
- const {id} = await params
- let {firstname,lastname,email,password,username,role}:IpropRegister = await req.json()
+export async function PUT(req:NextRequest,context:{params:{id:string} | Promise<{id:string}>}){
+
+const params = await context.params
+
+ const {id} =  params
+ let {firstname,lastname,email,password,username,role} = await req.json()
 
  try {
 

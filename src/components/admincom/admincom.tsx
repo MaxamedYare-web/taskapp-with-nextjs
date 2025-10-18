@@ -20,7 +20,7 @@ export const AdminCom = ()=>{
          redirect("/auth/login")
         }
     adminLog(token)
-    },[token])
+    },[token,adminLog])
 
  
 

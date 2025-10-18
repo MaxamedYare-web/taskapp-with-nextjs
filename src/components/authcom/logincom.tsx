@@ -20,11 +20,11 @@ import { redirect } from "next/navigation";
 import Cookies from "js-cookie"
 
 
-type Iurl = any
+
 
 
 const LoginComponent = () => {
-    const {LoginUser,isLoading,errors,userData} = useLoginUser()
+    const { LoginUser, isLoading, errors, userData } = useLoginUser()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -33,53 +33,53 @@ const LoginComponent = () => {
     }
 
 
-useEffect(()=>{
-    if(errors){
-        const netEr = errors?.response?.data?.error
-        addToast({
-            title:"Sorry there is error",
-            description:netEr ? netEr : errors,
-            color:"danger",
-            variant:"flat"
-        })
-    }
-},[errors])
-
-useEffect(()=>{
-    if(userData){
-      
-        addToast({
-            title:"😍 Conguration hambaloy",
-            description:`Waad ku gulesati in gasho accounkada ${userData.message}`,
-            timeout:2000,
-            shouldShowTimeoutProgress:true,
-            color:"success",
-            variant:"flat"
-
-        })
-
-        if(userData.banned){
-            redirect("/dashboard/ban")
+    useEffect(() => {
+        if (errors) {
+            const netEr = errors?.response?.data?.error
+            addToast({
+                title: "Sorry there is error",
+                description: netEr ? netEr : errors,
+                color: "danger",
+                variant: "flat"
+            })
         }
-    
-            if(userData.role !== "Admin"){
-                 redirect("/dashboard") 
+    }, [errors])
+
+    useEffect(() => {
+        if (userData) {
+
+            addToast({
+                title: "😍 Conguration hambaloy",
+                description: `Waad ku gulesati in gasho accounkada ${userData.message}`,
+                timeout: 2000,
+                shouldShowTimeoutProgress: true,
+                color: "success",
+                variant: "flat"
+
+            })
+
+            if (userData.banned) {
+                redirect("/dashboard/ban")
             }
-            if(userData.role == "Admin"){
+
+            if (userData.role !== "Admin") {
+                redirect("/dashboard")
+            }
+            if (userData.role == "Admin") {
                 redirect("/admin")
-               
+
             }
-            
-    }
-},[userData])
+
+        }
+    }, [userData])
 
 
-useEffect(()=>{
-    const token = Cookies.get("userToken")
-    if(token){
-    redirect("/dashboard")
-}
-},[])
+    useEffect(() => {
+        const token = Cookies.get("userToken")
+        if (token) {
+            redirect("/dashboard")
+        }
+    }, [])
 
 
     return (
@@ -121,10 +121,10 @@ useEffect(()=>{
                                     label="Password"
                                     isRequired
                                     errorMessage="Please enter you password"
-                                    
+
                                 />
                                 <Button color="primary" type="submit">{isLoading ? (<div className="flex gap-2 items-center"><Spinner color="white"
-                                               /> logining... </div>):"Login"}</Button>
+                                /> logining... </div>) : "Login"}</Button>
                             </Form>
                         </CardBody>
                     </div>
@@ -144,9 +144,9 @@ useEffect(()=>{
              backdrop-blur-[7px]
              w-full h-25 z-10 bottom-0">
                             <div className="flex flex-col justify-center gap-2 p-3 items-start h-[100%]">
-                                <p className="font-semibold text-white">if you don't have acccount please click Register</p>
+                                <p className="font-semibold text-white">{"if you don't have acccount please click Register"}</p>
                                 <Button as={Link} href="/auth/register" color="default" variant="ghost"
-     className="font-bold text-secondary-50 hover:text-primary-500 p-4
+                                    className="font-bold text-secondary-50 hover:text-primary-500 p-4
                  ">Register</Button>
                             </div>
                         </div>
