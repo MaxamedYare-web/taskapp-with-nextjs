@@ -56,6 +56,16 @@ useEffect(()=>{
         startTransitionAvator(async()=>{
             const result = await UpdateAvatorUser(avatorAndId)
             console.log(result)
+            if(result.status==500){
+                 addToast({
+                title:"failed😥",
+                description:result.message,
+                color:"danger",
+                timeout:3000,
+                shouldShowTimeoutProgress:true
+            })
+            return
+            }
             addToast({
                 title:"Hampalyo😎",
                 description:result.message,

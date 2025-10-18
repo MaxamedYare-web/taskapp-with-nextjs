@@ -19,7 +19,7 @@ interface IuserDash {
 }
 
 export default function LayoutDashbout({ children }: { children: React.ReactNode },) {
-  const { userData, userAccount } = useUserDash()
+  const { userData, userAccount,errors } = useUserDash()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const router = useRouter()
   const token = Cookies.get("userToken")
@@ -28,6 +28,10 @@ export default function LayoutDashbout({ children }: { children: React.ReactNode
 
   }, [token, userAccount])
 
+  console.log(errors)
+  if(errors){
+    Cookies.remove("userToken")
+  }
 
   // logout
   const logout = () => {
