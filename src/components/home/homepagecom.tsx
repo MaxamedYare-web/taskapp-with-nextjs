@@ -1,6 +1,6 @@
 "use client"
 import { ExhangeFormUpload, UpdateAvatorUser } from "@/app/lib/userlib/user";
-import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Form, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Snippet, Spinner, Tooltip, useDisclosure } from "@heroui/react";
+import { addToast, Avatar, Button, Card, CardBody, CardFooter, CardHeader, Form, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Snippet, Spinner, Tooltip, useDisclosure } from "@heroui/react";
 import { ArrowDown, ArrowUp, BadgeAlert, BadgeAlertIcon, BookAIcon, Upload } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useTransition } from "react";
@@ -19,7 +19,8 @@ interface IstepOne {
   account_number: string,
   user_account_number: string,
   from_amount_code: string,
-  to_amount_code: string
+  to_amount_code: string,
+  payment_proof?:string | null
 }
 
 export default function Homepagecom({ token }: { token: string }) {
@@ -40,6 +41,7 @@ export default function Homepagecom({ token }: { token: string }) {
   const [isPaymetProof, startPaymetProof] = useTransition()
   const [paymentScreenShot, setPaymentScreenshot] = useState<string | null>(null)
   const [isOpenToolTip,setIsOpenToolTip] = useState<boolean>(false)
+
 
   // all curents
   const allCurrents = [
@@ -201,7 +203,7 @@ export default function Homepagecom({ token }: { token: string }) {
       return
     }
 
-    setCurrentSteps((prev) => prev + 1)
+    setCurrentSteps(1)
     setStepOneData({
       account_number: String(fromCurfilImg?.account_number) !== "undefined" ? String(fromCurfilImg?.account_number) : String(allCurrents.find((c) => c.key == "zaad")?.account_number),
       from_current_amount: String(dataInput.from_amount),
@@ -219,7 +221,36 @@ export default function Homepagecom({ token }: { token: string }) {
   }
 
 
+ // payment proof screen shot upload
+  const handleChangeFile = (file: File) => {
 
+    startPaymetProof(async () => {
+      const result = await ExhangeFormUpload(file)
+      setPaymentScreenshot(result)
+       setStepOneData({
+      ...step_one_data,
+      payment_proof:String(result) ? String(result) : null
+    }as IstepOne)
+    })
+  }
+
+  // handle paid button
+  const handlePaidButton = ()=>{
+    if(!paymentScreenShot){
+      addToast({
+        title:"Please Upload Screenshot",
+        description:<p>Click <strong>Upload Payment Proof Screenshot</strong> to upload Screenshot with money you have sent us</p>,
+        color:"danger",
+        timeout:8000,
+        shouldShowTimeoutProgress:true
+      })
+      return
+    }
+    setCurrentSteps(2)
+   
+    console.log(step_one_data)
+
+  }
 
   // step 01
   const StepOneForm = () => (
@@ -327,19 +358,6 @@ export default function Homepagecom({ token }: { token: string }) {
     </Card>
 
   )
-
-  // payment proof screen shot upload
-  const handleChangeFile = (file: File) => {
-    console.log(file)
-    startPaymetProof(async () => {
-      const result = await ExhangeFormUpload(file)
-      if (result) {
-
-      }
-      setPaymentScreenshot(result)
-    })
-  }
-
   // step 02
   const StepTwoForm = () => (
     <Animation.Slide in={true} enteredClassName="custom-entered" placement="bottom" >
@@ -391,7 +409,7 @@ export default function Homepagecom({ token }: { token: string }) {
           <article className="flex items-center gap-2">
 
             <h1>hada fahmin halkan ku dhufo</h1>
-            <Tooltip  isOpen={isOpenToolTip} onOpenChange={(open)=>setIsOpenToolTip(!isOpenToolTip)} content={
+            <Tooltip  isOpen={isOpenToolTip} onOpenChange={(open)=>setIsOpenToolTip(false)} content={
                <p className="max-w-[400px]">Lacatagt ku dir numberka Companyiga ad u jedo copy dheh kadib ku dir
             marka dirto sawir kaso qad mesha upload ku qoran tahay tawo kadib sawirka so gali
             kadib ku dhufo buttonka hoos oo ah <strong>I PIAD </strong> 
@@ -406,29 +424,45 @@ export default function Homepagecom({ token }: { token: string }) {
           </article>
         </CardBody>
         <CardFooter>
-          <Button color="primary">I PAID</Button>
+          <Button onPress={handlePaidButton} color="primary">I PAID</Button>
         </CardFooter>
       </Card>
     </Animation.Slide>
   )
 
+  // finaly step
+  const StepThreeForm = ()=>(
+    <Animation.Slide in={true} placement="bottom">
+      <Card className="w-full lg:w-4xl md:w-3xl p-5" aria-label="final step">
+        <CardHeader>
+            <h1>final please waiting</h1>
+        </CardHeader>
+      </Card>
+
+    </Animation.Slide>
+  )
+
+
+
+
 
   return (
     <>
-      <main className='h-screen gap-5 items-center flex flex-col  pt-10'>
+      <main className='h-screen gap-5 flex items-center  flex-col md:justify-center pt-10'>
 
         <div className="space-y-3 w-full p-2 flex flex-col justify-center items-center">
 
           <Steps current={currentSteps} className="flex justify-between w-full lg:w-4xl">
             <Steps.Item />
             <Steps.Item />
-            <Steps.Item />
+            <Steps.Item title={currentSteps == 2 && <h1 className="font-bold text-warning-500">Waiting</h1>} icon={currentSteps == 2 ? <Spinner color="warning" variant="simple"/> :  undefined}/>
           </Steps>
 
 
-          <div className="w-full flex justify-center items-center">
+          <div className="w-full flex justify-center items-center md:justify-center md:items-center">
             {currentSteps == 0 && StepOneForm()}
             {currentSteps == 1 && StepTwoForm()}
+            {currentSteps == 2 && StepThreeForm()}
           </div>
 
 

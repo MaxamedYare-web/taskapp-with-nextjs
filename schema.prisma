@@ -24,6 +24,8 @@ model User  {
   role Role @default(User)
   tasks Tasks[]
   blogs Blogs[]
+  exchangeUser ExhangeUser[]
+  allCurrentsAdmin AllCurrents[]
 }
 
 model Tasks {
@@ -53,6 +55,58 @@ model Blogs {
 }
 
 
+model ExhangeUser {
+  id Int @id @default(autoincrement())
+  account_number Int
+  from_amount_code String
+  from_current_amount Int
+  from_current_img String
+  from_current_name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  payment_proof String
+  to_amount_code String 
+  to_current_amount Int
+  to_current_img String
+  to_current_name String
+  user_account_number Int
+  authorId Int
+  author User @relation(fields:[authorId],references:[id])
+  status StatusExchange
+ 
+}
+
+model AllCurrents {
+  id Int @id @default(autoincrement())
+  current_name String
+  key String
+  rate Int
+  min Int
+  max Int
+  reverse String
+  symbol String
+  code String
+  account_number String
+  category CategoryExchange
+  img String
+  authorId Int
+   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  author User @relation(fields:[authorId],references:[id])
+  active Boolean @default(false)
+}
+
+enum CategoryExchange {
+  fiat
+  crypto
+}
+
+enum StatusExchange {
+  waiting
+  complated
+  rejected
+  refund
+}
 
 enum Status {
   pending

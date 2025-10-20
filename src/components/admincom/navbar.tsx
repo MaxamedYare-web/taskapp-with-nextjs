@@ -1,7 +1,7 @@
 "use client"
 import { Listbox, ListboxItem, Skeleton } from "@heroui/react";
 import Cookies from "js-cookie";
-import { Ban, LayoutDashboard, Settings, Users } from "lucide-react";
+import { Ban, LayoutDashboard, Settings, Users, Wallet } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { CgLogOut } from "react-icons/cg";
 import { SiSpeedtest } from "react-icons/si";
@@ -46,6 +46,9 @@ const router = useRouter()
 
             <ListboxItem textValue="user" key={"user"} href="/admin/users" startContent={<Users />} color="primary" variant="shadow">
               <Skeleton isLoaded={true} className="font-bold text-md"> Users</Skeleton>
+            </ListboxItem>
+            <ListboxItem textValue="currents" key={"currents"} href="/admin/currents" startContent={<Wallet />} color="primary" variant="shadow">
+              <Skeleton isLoaded={true} className="font-bold text-md"> Currents</Skeleton>
             </ListboxItem>
             <ListboxItem textValue="ban" href="/admin/usrsban" key={"ban"} startContent={<Ban />} color="primary" variant="shadow">
               <Skeleton isLoaded={true} className="font-bold text-md"> Banned User</Skeleton>

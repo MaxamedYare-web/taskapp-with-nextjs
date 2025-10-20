@@ -27,14 +27,8 @@ useEffect(()=>{
     userAccount(String(token))
 },[token,userAccount])
 
-
-
-
-
-
  const userInfo:IuserDash = userData?.account
 
- 
 if(isLoading){
     return  <Navbar className="bg-gradient-to-bl from-primary-500/70 to-secondary-500/70 text-white">
         <NavbarBrand >

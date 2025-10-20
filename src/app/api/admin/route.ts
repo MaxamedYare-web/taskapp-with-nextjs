@@ -7,13 +7,13 @@ import { headers } from "next/headers";
 export async function GET(){
     try {
         const userId = (await headers()).get("userDataId")
-        const {user,tasks} = await prismadata()
+        const {user,allCurrents} = await prismadata()
         const adminData = await user.findUnique({where:{id:Number(userId)},omit:{password:true,banned:true}})
         const users = await user.findMany({omit:{password:true}})
-        const tasksData = await tasks.findMany()
+        const currents = await allCurrents.findMany()
         const usersData = {
             users,
-            tasksData,
+            currents,
             adminData
         }
         return NextResponse.json(usersData)

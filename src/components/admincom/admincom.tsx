@@ -1,47 +1,31 @@
 "use client"
-import { useAdminAuth } from "@/app/lib/admin/adminauth"
+
 import Cookies from "js-cookie"
 import { redirect } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState, useTransition } from "react"
 import Headeradmin from "./headeradmin"
+import { AdminData } from "@/app/lib/admin/adminauth"
+
+export const AdminCom = () => {
+
+  const [isPending,startTransition] = useTransition()
+  const [allData,setAllData] = useState<any | null>(null)
+  useEffect(()=>{
+    startTransition(async()=>{
+      const result = await AdminData()
+      setAllData(result)
+    })
+
+  },[])
 
 
 
+  return (
+    <>
+      <div className="flex w-full">
+        <Headeradmin currents={allData?.currents} isPending={isPending} users={allData?.users}/>
+      </div>
+    </>
+  )
 
-export const AdminCom = ()=>{
-    const {adminData,isloading,errorData,adminLog} = useAdminAuth()
-
-
-
-
-    const token = Cookies.get("userToken")
-    useEffect(()=>{
-        if(!token){
-         redirect("/auth/login")
-        }
-    adminLog(token)
-    },[token,adminLog])
-
- 
-
-
-   useEffect(()=>{
-     if(errorData){
-   console.log(errorData)
-    
-    }
-   },[errorData])
-
-      return (
-        <>
-        <div className="flex w-full">
-           
-             
-               <Headeradmin isLoading={isloading} dataInfo={adminData}/>
-          
-           
-        </div>
-        </>
-    )
-  
 }
