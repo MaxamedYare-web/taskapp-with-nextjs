@@ -15,9 +15,10 @@ interface IadminInfo{
 }
 
 const HeaderNavBar = ({adminInfo,isPending}:{adminInfo:IadminInfo,isPending:boolean}) => {
-console.log(isPending)
+
 
 const avator = adminInfo?.avator as string
+
   return (
     <div className='flex justify-between items-center m-3 bg-white p-3 rounded'>
       <h1 className='text-lg md:text-2xl  font-bold text-gray-700'>Welcome Back, Admin</h1>

@@ -33,7 +33,8 @@ export async function POST(req:NextRequest){
      await user.update({where:{email:extisUser.email},data:{lastlogin:new Date().toISOString()}})
       return NextResponse.json({success:true,message:"successfully logged",token:token,role:extisUser.role})  
     } catch (error) {
-        return NextResponse.json({error:`Network error please check you internet ${(error as Error).message}`},{status:400})
+        console.log(error)
+        return NextResponse.json({error:` ${(error as Error).message}`},{status:500})
     }
 }
 

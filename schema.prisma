@@ -1,99 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-
-
 }
 
-generator client {
-  provider = "prisma-client-js"
-  
-}
-
-model User  {
-  id Int @id @default(autoincrement())
-  email String @unique
-  firstname String
-  lastname String
-  username String
-  password String
-  banned Boolean  @default(false)
-  createdAt DateTime @default(now())
-  lastlogin DateTime @default(now())
-  avator String @default("")
-  role Role @default(User)
-  tasks Tasks[]
-  blogs Blogs[]
-  exchangeUser ExhangeUser[]
+model User {
+  id               Int           @id @default(autoincrement())
+  email            String        @unique
+  firstname        String
+  lastname         String
+  username         String
+  password         String
+  banned           Boolean       @default(false)
+  createdAt        DateTime      @default(now())
+  lastlogin        DateTime      @default(now())
+  role             Role          @default(User)
+  avator           String        @default("")
   allCurrentsAdmin AllCurrents[]
+  blogs            Blogs[]
+  exchangeUser     ExhangeUser[]
+  tasks            Tasks[]
 }
 
 model Tasks {
-  id Int @id @default(autoincrement())
-  title String
+  id          Int      @id @default(autoincrement())
+  title       String
   description String
-  status Status 
-  authorId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  author User @relation(fields: [authorId], references: [id])
-
+  status      Status
+  authorId    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  author      User     @relation(fields: [authorId], references: [id])
 }
 
 model Blogs {
-  id Int @id @default(autoincrement())
-  titile String
-  description String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  published Publish
-  avator String
-  delet_url_hash String @default("")
-  authorId Int
-  category CateGory
-  author User @relation(fields:[authorId], references:[id])
+  id             Int      @id @default(autoincrement())
+  titile         String
+  description    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+  published      Publish
+  avator         String
+  authorId       Int
+  category       CateGory
+  delet_url_hash String   @default("")
+  author         User     @relation(fields: [authorId], references: [id])
 }
 
-
 model ExhangeUser {
-  id Int @id @default(autoincrement())
-  account_number Int
-  from_amount_code String
+  id                  Int            @id @default(autoincrement())
+  account_number      Int
+  from_amount_code    String
   from_current_amount Int
-  from_current_img String
-  from_current_name String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  payment_proof String
-  to_amount_code String 
-  to_current_amount Int
-  to_current_img String
-  to_current_name String
+  from_current_img    String
+  from_current_name   String
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @default(now())
+  payment_proof       String
+  to_amount_code      String
+  to_current_amount   Int
+  to_current_img      String
+  to_current_name     String
   user_account_number Int
-  authorId Int
-  author User @relation(fields:[authorId],references:[id])
-  status StatusExchange
- 
+  authorId            Int
+  status              StatusExchange
+  author              User           @relation(fields: [authorId], references: [id])
 }
 
 model AllCurrents {
-  id Int @id @default(autoincrement())
-  current_name String
-  key String
-  rate Int
-  min Int
-  max Int
-  reverse String
-  symbol String
-  code String
+  id             Int              @id @default(autoincrement())
+  current_name   String
+  key            String
+  rate           Int
+  min            Int
+  max            Int
+  reverse        String
+  symbol         String
+  code           String
   account_number String
-  category CategoryExchange
-  img String
-  authorId Int
-   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  author User @relation(fields:[authorId],references:[id])
-  active Boolean @default(false)
+  category       CategoryExchange
+  img            String
+  authorId       Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
+  active         Boolean          @default(false)
+  author         User             @relation(fields: [authorId], references: [id])
 }
 
 enum CategoryExchange {
