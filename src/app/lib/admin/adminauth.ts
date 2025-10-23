@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation"
-import { useCallback, useState } from "react"
 import Api from "../apidata"
 
 
