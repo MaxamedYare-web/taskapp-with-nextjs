@@ -2,6 +2,7 @@
 import { AddCurrent, uploadCurrentImage } from "@/app/lib/admin/currents"
 import { addToast, Button, Card, CardBody, CardHeader, Form, Image, Input, Select, SelectItem, Spinner } from "@heroui/react"
 import { Upload } from "lucide-react"
+import { redirect } from "next/navigation"
 import React, { useEffect, useState, useTransition } from "react"
 
 interface Icurrents {
@@ -27,6 +28,7 @@ export const AddCurrentsCom = () => {
     const [avatorLink, setAvatorLine] = useState<string | null>(null)
     const [isPenCurrentData,startCurrentData] = useTransition()
     const [currentData,setCurrentData] = useState<Icurrents | null>(null)
+   
 
 
 
@@ -76,13 +78,16 @@ export const AddCurrentsCom = () => {
         startCurrentData(async()=>{
             const result = await AddCurrent(currentData)
             if(result.success){
+               
                 addToast({
                     title:"Current was Added😍",
                     description:result.message,
                     color:"success"
                 })
+                redirect("/admin/currents")
             }
               setCurrentData(null)
+       
         })
     }
     },[currentData,startCurrentData])
@@ -107,10 +112,6 @@ export const AddCurrentsCom = () => {
 
     }
 
-    // handle reset form when data success
-    const handleResetForm = ()=>{
-
-    }
 
     return (
         <>
@@ -131,7 +132,7 @@ export const AddCurrentsCom = () => {
                                 <SelectItem key={"fiat"}>fiat</SelectItem>
                                 <SelectItem key={"crypto"}>Crypto</SelectItem>
                             </Select>
-                            <Input required errorMessage="Current name is required" classNames={{ label: "font-semibold text-default-500 text-[18px]" }} name="current_name" label="Current Name" placeholder="like btc or usdt and etc..." />
+                            <Input  required errorMessage="Current name is required" classNames={{ label: "font-semibold text-default-500 text-[18px]" }} name="current_name" label="Current Name" placeholder="like btc or usdt and etc..." />
                             <Input required errorMessage="Current key is required" classNames={{ label: "font-semibold text-default-500 text-[18px]" }} name="key" label="Current Key" placeholder="like bitcoin or usdt and etc..." />
                             <Input required errorMessage="Symbol is required" name="symbol" label="Symbol" placeholder="like usdt or btc" />
                             <Input required errorMessage="Code is required" classNames={{ label: "font-semibold text-default-500 text-[18px]" }} name="code" label="Code" placeholder="like '$' or btc" />
@@ -160,13 +161,14 @@ export const AddCurrentsCom = () => {
 
                             </label>
 
-                            <Button type="submit" color="primary">
+                            <Button  type="submit" color="primary">
                                 {
                                     isPenCurrentData ? <div className="flex items-center gap-1">
                                         <Spinner variant="wave" color="warning"/> Creating...
                                     </div> : "Create Current"
                                 }
                                 </Button>
+                               
                         </Form>
 
                     </CardBody>

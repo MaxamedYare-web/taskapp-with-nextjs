@@ -1,5 +1,6 @@
 import Api from "../apidata"
 
+
 // upload current image
 export const uploadCurrentImage = async(fileData:any)=>{
 
@@ -32,6 +33,7 @@ export const AddCurrent = async(dataCurrent:any)=>{
 
 // get all currents 
 export const getAllCurrents = async()=>{
+   
     try {
         const response = await Api.get("/admin/currents")
         const dataRes = await response.data
@@ -41,6 +43,34 @@ export const getAllCurrents = async()=>{
         console.log(error)
         return error
     }
+}
+
+// delete current
+export const deleteCurrent = async(id:any)=>{
+   
+    try {
+        const response = await Api.delete(`/admin/currents/delete/${id}`)
+        const dataRes = await response.data
+        return dataRes
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+
+// update currents
+export const updateCurrents = async(id:string,updateData:any)=>{
+
+    try {
+        const response = await Api.put(`/admin/currents/update/${id}`,updateData)
+        const dataRes = await response.data
+        console.log(dataRes)
+        return dataRes
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 

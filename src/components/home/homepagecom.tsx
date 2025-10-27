@@ -1,12 +1,13 @@
 "use client"
-import { ExhangeFormUpload, UpdateAvatorUser } from "@/app/lib/userlib/user";
-import { addToast, Avatar, Button, Card, CardBody, CardFooter, CardHeader, Form, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Snippet, Spinner, Tooltip, useDisclosure } from "@heroui/react";
-import { ArrowDown, ArrowUp, BadgeAlert, BadgeAlertIcon, BookAIcon, Upload } from "lucide-react";
+import { getAllCurrents } from "@/app/lib/admin/currents";
+import { getAllCurrentWithHome } from "@/app/lib/home/currents";
+import { ExhangeFormUpload } from "@/app/lib/userlib/user";
+import { addToast, Avatar, Button, Card, CardBody, CardFooter, CardHeader, Form, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Skeleton, Snippet, Spinner, Tooltip, useDisclosure } from "@heroui/react";
+import { ArrowDown, Upload } from "lucide-react";
 import Link from "next/link";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 import { Animation, Badge, Steps, Uploader } from "rsuite";
-import { FileType } from "rsuite/esm/Uploader";
 
 
 interface IstepOne {
@@ -21,6 +22,22 @@ interface IstepOne {
   from_amount_code: string,
   to_amount_code: string,
   payment_proof?:string | null
+}
+
+interface Icurrents {
+    current_name: string
+    key: string
+    rate: number
+    min: number
+    max: number
+    img: string
+    reverse: number
+    account_number: string
+    code: string
+    symbol: string
+    category: string,
+    active: boolean
+    id?:string
 }
 
 export default function Homepagecom({ token }: { token: string }) {
@@ -41,65 +58,76 @@ export default function Homepagecom({ token }: { token: string }) {
   const [isPaymetProof, startPaymetProof] = useTransition()
   const [paymentScreenShot, setPaymentScreenshot] = useState<string | null>(null)
   const [isOpenToolTip,setIsOpenToolTip] = useState<boolean>(false)
+  const [isPending,startTransition] = useTransition()
+  const [allCurrents,setallCurrents]=useState<Icurrents[]>([])
 
+// get all currents
+useEffect(()=>{
+
+startTransition(async()=>{
+    const result = await getAllCurrentWithHome()
+    setallCurrents(result.currents)
+})
+
+},[])
 
   // all curents
-  const allCurrents = [
-    {
-      current_name: "Evcplus",
-      key: "Evcplus",
-      id: 1,
-      rate: 5,
-      min: 1,
-      max: 1500,
-      img: "https://i.ibb.co/Swsd9hdb/evc.png",
-      symbol: "USD",
-      code: "$",
-      category: "fiat",
-      account_number: "0616825183"
-    },
-    {
-      current_name: "Zaad",
-      key: "Zaad",
-      id: 1,
-      rate: 2,
-      min: 5,
-      max: 2000,
-      img: "https://i.ibb.co/Hf33j9LY/zaad.png",
-      symbol: "USD",
-      code: "$",
-      category: "fiat",
-      account_number: "0616825183"
-    },
-    {
-      current_name: "Sahal",
-      key: "Sahal",
-      id: 1,
-      rate: 4,
-      min: 4,
-      max: 4000,
-      img: "https://i.ibb.co/WWLFRP8N/sahal.png",
-      symbol: "USD",
-      code: "$",
-      category: "fiat",
-      account_number: "0616825183"
-    },
-    {
-      current_name: "Payeer",
-      key: "Payeer",
-      id: 1,
-      rate: 6,
-      min: 3,
-      max: 3000,
-      img: "https://i.ibb.co/S4c3Yh2n/payer.png",
-      symbol: "USD",
-      code: "$",
-      category: "fiat",
-      account_number: "P1293092029"
-    },
+  // const allCurrents = [
+  //   {
+  //     current_name: "Evcplus",
+  //     key: "Evcplus",
+  //     id: 1,
+  //     rate: 5,
+  //     min: 1,
+  //     max: 1500,
+  //     img: "https://i.ibb.co/Swsd9hdb/evc.png",
+  //     symbol: "USD",
+  //     code: "$",
+  //     category: "fiat",
+  //     account_number: "0616825183"
+  //   },
+  //   {
+  //     current_name: "Zaad",
+  //     key: "Zaad",
+  //     id: 1,
+  //     rate: 2,
+  //     min: 5,
+  //     max: 2000,
+  //     img: "https://i.ibb.co/Hf33j9LY/zaad.png",
+  //     symbol: "USD",
+  //     code: "$",
+  //     category: "fiat",
+  //     account_number: "0616825183"
+  //   },
+  //   {
+  //     current_name: "Sahal",
+  //     key: "Sahal",
+  //     id: 1,
+  //     rate: 4,
+  //     min: 4,
+  //     max: 4000,
+  //     img: "https://i.ibb.co/WWLFRP8N/sahal.png",
+  //     symbol: "USD",
+  //     code: "$",
+  //     category: "fiat",
+  //     account_number: "0616825183"
+  //   },
+  //   {
+  //     current_name: "Payeer",
+  //     key: "Payeer",
+  //     id: 1,
+  //     rate: 6,
+  //     min: 3,
+  //     max: 3000,
+  //     img: "https://i.ibb.co/S4c3Yh2n/payer.png",
+  //     symbol: "USD",
+  //     code: "$",
+  //     category: "fiat",
+  //     account_number: "P1293092029"
+  //   },
 
 
-  ]
+  // ]
 
   // handle select current
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -259,7 +287,8 @@ export default function Homepagecom({ token }: { token: string }) {
       <CardBody>
         <Form onSubmit={handleSubmitExchangeForm} className="grid grid-cols-2 gap-6   sm:gap-3 p-2">
           {/* from amount select */}
-          <Select
+        <Skeleton isLoaded={!isPending} className="rounded-2xl">
+            <Select
             className="w-full col-span-2 sm:col-span-1"
             classNames={{
               label: "font-bold text-2xl",
@@ -286,8 +315,10 @@ export default function Homepagecom({ token }: { token: string }) {
               ))
             }
           </Select>
+        </Skeleton>
           {/* to amount select */}
-          <Select
+         <Skeleton isLoaded={!isPending} className="rounded-2xl">
+           <Select
             className="col-span-2 sm:col-span-1"
             color={errorCurrents.errorToCur ? "danger" : "default"}
             description={errorCurrents.errorToCur && errorCurrents.errorToCur}
@@ -312,8 +343,10 @@ export default function Homepagecom({ token }: { token: string }) {
               ))
             }
           </Select>
+         </Skeleton>
           {/* from amount input */}
-          <Input
+       <Skeleton isLoaded={!isPending} className="rounded-2xl">
+           <Input
             className="col-span-2 sm:col-span-1"
             onChange={handleChangeAmount}
             color={errorCurrents.errorfromAmount ? "danger" : "default"}
@@ -326,9 +359,11 @@ export default function Homepagecom({ token }: { token: string }) {
             startContent={fromCurfilImg && <span className="font-bold text-default-500">{fromCurfilImg.code}</span>}
             endContent={fromCurfilImg && <span className="font-bold text-default-500">{fromCurfilImg.symbol}</span>}
           />
+       </Skeleton>
 
           {/* to amount input */}
-          <Input
+         <Skeleton isLoaded={!isPending} className="rounded-2xl">
+           <Input
             className="col-span-2 sm:col-span-1"
             value={String(get_amount) && String(get_amount)}
             placeholder="0.00"
@@ -340,6 +375,7 @@ export default function Homepagecom({ token }: { token: string }) {
               <h1>max: <span>{toCurfilImg?.code}{toCurfilImg?.max}</span></h1>
             </div>}
           />
+         </Skeleton>
           {
             // {/* you number or address input */}
             toCurfilImg?.category && <Input onChange={handleChangeAmount} className="col-span-2" classNames={{
@@ -352,7 +388,9 @@ export default function Homepagecom({ token }: { token: string }) {
 
           }
 
-          <Button type="submit" color="primary" className="col-span-2">Start Exchange</Button>
+         <Skeleton isLoaded={!isPending} className="rounded-full">
+           <Button type="submit" color="primary" className="col-span-2">Start Exchange</Button>
+         </Skeleton>
         </Form>
       </CardBody>
     </Card>
