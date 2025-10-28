@@ -30,9 +30,6 @@ useEffect(()=>{
  })
 },[startTransition])
 
-if(!userInfo){
-  return
-}
 
   return (<div  className="">
     <NavBarHome/>

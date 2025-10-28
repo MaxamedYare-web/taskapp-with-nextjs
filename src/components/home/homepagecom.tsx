@@ -1,9 +1,8 @@
 "use client"
-import { getAllCurrents } from "@/app/lib/admin/currents";
 import { getAllCurrentWithHome } from "@/app/lib/home/currents";
 import { createExchange, ExhangeFormUpload } from "@/app/lib/userlib/user";
 import { addToast, Avatar, Button, Card, CardBody, CardFooter, CardHeader, Form, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Skeleton, Snippet, Spinner, Tooltip, useDisclosure } from "@heroui/react";
-import { ArrowDown, Upload, WatchIcon } from "lucide-react";
+import { ArrowDown, Upload } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState, useTransition } from "react";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
@@ -55,7 +54,7 @@ interface Iuser {
  username:string
 }
 
-export default function Homepagecom({ token,userInfo }: { token: string,userInfo:Iuser }) {
+export default function Homepagecom({ token,userInfo }: { token: string,userInfo:Iuser | null }) {
   const [fromCurSymbol, setFromCurSymbol] = useState<{ fromcur: string, tocur: string }>({
     fromcur: "",
     tocur: ""
@@ -87,7 +86,7 @@ startTransition(async()=>{
 
 },[])
 
-
+console.log(allCurrents)
 
   // handle select current
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -104,10 +103,10 @@ startTransition(async()=>{
 
   }
 
-  const fromCurfilImg = allCurrents.find((e) => e.key == fromCurSymbol.fromcur)
-  const toCurfilImg = allCurrents.find((e) => e.key == fromCurSymbol.tocur)
-  const toCurrSelectItems = allCurrents.filter((item) => item.key !== fromCurfilImg?.key)
-  const fromCurrSelectItems = allCurrents.filter((fromC) => fromC.key !== toCurfilImg?.key)
+  const fromCurfilImg = allCurrents?.find((e) => e.key == fromCurSymbol?.fromcur)
+  const toCurfilImg = allCurrents?.find((e) => e.key == fromCurSymbol?.tocur)
+  const toCurrSelectItems = allCurrents?.filter((item) => item.key !== fromCurfilImg?.key)
+  const fromCurrSelectItems = allCurrents?.filter((fromC) => fromC.key !== toCurfilImg?.key)
 
   //  handleChange amount
   const handleChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -203,7 +202,7 @@ startTransition(async()=>{
       user_account_number: String(dataInput.to_current_addres),
       from_amount_code: String(fromCurfilImg?.code),
       to_amount_code: String(toCurfilImg?.code),
-      userId:userInfo?.id,
+      userId:Number(userInfo?.id),
 
     })
     // check if user login
@@ -272,7 +271,7 @@ startTransition(async()=>{
 
             name="fromcur" onChange={handleChangeSelect} label="Send" placeholder="Select from current">
             {
-              fromCurrSelectItems.map((c) => (
+              fromCurrSelectItems?.map((c) => (
                 <SelectItem startContent={<Image alt="place holder from cur image" className="w-10 border-1 border-primary-500 h-10 rounded-full" src={c.img} />}
                   textValue={c.current_name} key={c.key} >
                   <div className="grid grid-cols-1">
@@ -301,7 +300,7 @@ startTransition(async()=>{
             } label="Get"
             placeholder="Select to current">
             {
-              toCurrSelectItems.map((c) => (
+              toCurrSelectItems?.map((c) => (
                 <SelectItem startContent={<Image alt="to cur image place holder" className="w-10 h-10 border-1 border-primary-500 rounded-full" src={c.img} />} textValue={c.current_name} key={c.key}>
                   <div className="grid grid-cols-1">
                     <h1> {c.current_name}</h1>

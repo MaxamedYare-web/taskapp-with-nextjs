@@ -11,8 +11,6 @@ interface IpropTok{
 export const runtime = "nodejs"
 export async function middleware(req:NextRequest){
     const pathname = req.nextUrl.pathname
-   
-
     // api route
 if(pathname.startsWith("/api/user") || pathname.startsWith("/api/admin")){
    return handleApiRout(req,pathname)
@@ -108,9 +106,6 @@ if(user?.banned && !pathname.startsWith("/dashboard/ban")){
 
     } catch (error) {
         console.log(error)
-        if(error){
-            (await cookies()).delete("userToken")
-        }
         if(!pathname.startsWith("/auth/login")){
             return NextResponse.redirect(new URL("/auth/login",req.url))
         }

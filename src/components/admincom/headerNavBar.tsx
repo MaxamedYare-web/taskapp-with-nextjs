@@ -1,6 +1,8 @@
 "use client"
 
 import { Avatar, Skeleton, User } from "@heroui/react"
+import { MenuIcon } from "lucide-react"
+import { Button } from "rsuite"
 
 interface IadminInfo{
   email:string 
@@ -14,14 +16,19 @@ interface IadminInfo{
 
 }
 
-const HeaderNavBar = ({adminInfo,isPending}:{adminInfo:IadminInfo,isPending:boolean}) => {
+const HeaderNavBar = ({adminInfo,isPending,onOpen}:{adminInfo:IadminInfo,isPending:boolean,onOpen:()=>void}) => {
 
 
 const avator = adminInfo?.avator as string
 
   return (
     <div className='flex justify-between items-center m-3 bg-white p-3 rounded'>
-      <h1 className='text-lg md:text-2xl  font-bold text-gray-700'>Welcome Back, Admin</h1>
+      <h1 className='text-lg hidden sm:block md:text-2xl  font-bold text-gray-700'>Welcome Back, Admin</h1>
+     <article className="sm:hidden">
+       <Button onClick={()=>onOpen()}>
+        <MenuIcon/>
+      </Button>
+     </article>
 
       {
         isPending ? <div className="max-w-[300px] w-full flex items-center gap-3">

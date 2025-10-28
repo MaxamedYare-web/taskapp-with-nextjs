@@ -88,7 +88,7 @@ return(
             </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
-            <NavbarItem as={Link} href={"/dashboard/profile"} className="text-white">
+            <NavbarItem  className="text-white">
 
             {
                 !token ?    <Button  as={Link} href="/auth/login" color="primary" 
