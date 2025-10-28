@@ -25,6 +25,16 @@ export const useUserDash = ()=>{
 
 }
 
+// user data
+export const userDataOnline = async()=>{
+   try {
+     const res = await Api.get("/user")
+     return await res.data
+   } catch (error) {
+    console.log(error)
+    return error
+   }
+}
 
 // update profile image
 export const uploadImageProfile = async (dataFile:any)=>{
@@ -43,7 +53,6 @@ try {
 
 }
 
-
 // update prisma image avator 
 export const UpdateAvatorUser = async (data:{avator:string,id:string})=>{
     try {
@@ -54,14 +63,9 @@ export const UpdateAvatorUser = async (data:{avator:string,id:string})=>{
     }
 }
 
-
-
-// test
-
+// upload payment screanshot
 export const ExhangeFormUpload = async(file:File)=>{
     const apu_url = process.env.NEXT_PUBLIC_URL_IMG as string
-   
-
 const formFile = new FormData()
 formFile.append("image",file)
 
@@ -80,7 +84,17 @@ try {
 
 }
 
-
+// create exchange data
+export const createExchange = async(exchangeData:any)=>{
+ try {
+     const res = await Api.post("/user/exchange/create",exchangeData)
+     return await res.data
+ } catch (error) {
+    console.log(error)
+    return error
+ }
+  
+}
 
 
 

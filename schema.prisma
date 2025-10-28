@@ -52,7 +52,7 @@ model Blogs {
 
 model ExhangeUser {
   id                  Int            @id @default(autoincrement())
-  account_number      Int
+  account_number      String
   from_amount_code    String
   from_current_amount Int
   from_current_img    String
@@ -64,7 +64,7 @@ model ExhangeUser {
   to_current_amount   Int
   to_current_img      String
   to_current_name     String
-  user_account_number Int
+  user_account_number String
   authorId            Int
   status              StatusExchange
   author              User           @relation(fields: [authorId], references: [id])

@@ -1,9 +1,9 @@
 "use client"
 import { getAllCurrents } from "@/app/lib/admin/currents";
 import { getAllCurrentWithHome } from "@/app/lib/home/currents";
-import { ExhangeFormUpload } from "@/app/lib/userlib/user";
+import { createExchange, ExhangeFormUpload } from "@/app/lib/userlib/user";
 import { addToast, Avatar, Button, Card, CardBody, CardFooter, CardHeader, Form, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Skeleton, Snippet, Spinner, Tooltip, useDisclosure } from "@heroui/react";
-import { ArrowDown, Upload } from "lucide-react";
+import { ArrowDown, Upload, WatchIcon } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState, useTransition } from "react";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
@@ -15,14 +15,18 @@ interface IstepOne {
   to_current_name: string,
   from_current_img: string,
   to_current_img: string,
-  from_current_amount: string,
-  to_current_amount: string,
+  from_current_amount: number,
+  to_current_amount: number,
   account_number: string,
   user_account_number: string,
   from_amount_code: string,
   to_amount_code: string,
-  payment_proof?:string | null
+  payment_proof?:string | null,
+  userId:number
+
 }
+
+
 
 interface Icurrents {
     current_name: string
@@ -40,7 +44,18 @@ interface Icurrents {
     id?:string
 }
 
-export default function Homepagecom({ token }: { token: string }) {
+interface Iuser {
+  id:number
+  email:string
+  avator:string
+ firstname:string
+ lastlogin:string 
+ lastname:string 
+ role:string 
+ username:string
+}
+
+export default function Homepagecom({ token,userInfo }: { token: string,userInfo:Iuser }) {
   const [fromCurSymbol, setFromCurSymbol] = useState<{ fromcur: string, tocur: string }>({
     fromcur: "",
     tocur: ""
@@ -60,6 +75,7 @@ export default function Homepagecom({ token }: { token: string }) {
   const [isOpenToolTip,setIsOpenToolTip] = useState<boolean>(false)
   const [isPending,startTransition] = useTransition()
   const [allCurrents,setallCurrents]=useState<Icurrents[]>([])
+  const [isPenExchange,startExchangeForm] = useTransition()
 
 // get all currents
 useEffect(()=>{
@@ -71,63 +87,7 @@ startTransition(async()=>{
 
 },[])
 
-  // all curents
-  // const allCurrents = [
-  //   {
-  //     current_name: "Evcplus",
-  //     key: "Evcplus",
-  //     id: 1,
-  //     rate: 5,
-  //     min: 1,
-  //     max: 1500,
-  //     img: "https://i.ibb.co/Swsd9hdb/evc.png",
-  //     symbol: "USD",
-  //     code: "$",
-  //     category: "fiat",
-  //     account_number: "0616825183"
-  //   },
-  //   {
-  //     current_name: "Zaad",
-  //     key: "Zaad",
-  //     id: 1,
-  //     rate: 2,
-  //     min: 5,
-  //     max: 2000,
-  //     img: "https://i.ibb.co/Hf33j9LY/zaad.png",
-  //     symbol: "USD",
-  //     code: "$",
-  //     category: "fiat",
-  //     account_number: "0616825183"
-  //   },
-  //   {
-  //     current_name: "Sahal",
-  //     key: "Sahal",
-  //     id: 1,
-  //     rate: 4,
-  //     min: 4,
-  //     max: 4000,
-  //     img: "https://i.ibb.co/WWLFRP8N/sahal.png",
-  //     symbol: "USD",
-  //     code: "$",
-  //     category: "fiat",
-  //     account_number: "0616825183"
-  //   },
-  //   {
-  //     current_name: "Payeer",
-  //     key: "Payeer",
-  //     id: 1,
-  //     rate: 6,
-  //     min: 3,
-  //     max: 3000,
-  //     img: "https://i.ibb.co/S4c3Yh2n/payer.png",
-  //     symbol: "USD",
-  //     code: "$",
-  //     category: "fiat",
-  //     account_number: "P1293092029"
-  //   },
 
-
-  // ]
 
   // handle select current
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -234,15 +194,17 @@ startTransition(async()=>{
     setCurrentSteps(1)
     setStepOneData({
       account_number: String(fromCurfilImg?.account_number) !== "undefined" ? String(fromCurfilImg?.account_number) : String(allCurrents.find((c) => c.key == "zaad")?.account_number),
-      from_current_amount: String(dataInput.from_amount),
+      from_current_amount: Number(dataInput.from_amount),
       from_current_img: String(fromCurfilImg?.img),
       from_current_name: String(dataInput.fromcur),
-      to_current_amount: String(dataInput.to_amount),
+      to_current_amount: Number(dataInput.to_amount),
       to_current_img: String(toCurfilImg?.img),
       to_current_name: String(dataInput.tocur),
       user_account_number: String(dataInput.to_current_addres),
       from_amount_code: String(fromCurfilImg?.code),
-      to_amount_code: String(toCurfilImg?.code)
+      to_amount_code: String(toCurfilImg?.code),
+      userId:userInfo?.id,
+
     })
     // check if user login
 
@@ -274,11 +236,17 @@ startTransition(async()=>{
       })
       return
     }
+      startExchangeForm(async()=>{
+        const result = await createExchange(step_one_data)
+        console.log(result)
+      })
     setCurrentSteps(2)
    
-    console.log(step_one_data)
+
 
   }
+
+ 
 
   // step 01
   const StepOneForm = () => (
@@ -309,7 +277,7 @@ startTransition(async()=>{
                   textValue={c.current_name} key={c.key} >
                   <div className="grid grid-cols-1">
                     <h1> {c.current_name}</h1>
-                    <Badge style={{ width: "35px" }} color="violet" content={c.symbol} className="w-auto" />
+                    <Badge style={{ width: "35px",}} color="violet" content={c.symbol} className="w-auto uppercase"/>
                   </div>
                 </SelectItem>
               ))
@@ -337,7 +305,7 @@ startTransition(async()=>{
                 <SelectItem startContent={<Image alt="to cur image place holder" className="w-10 h-10 border-1 border-primary-500 rounded-full" src={c.img} />} textValue={c.current_name} key={c.key}>
                   <div className="grid grid-cols-1">
                     <h1> {c.current_name}</h1>
-                    <Badge style={{ width: "35px" }} color="violet" content={c.symbol} className="w-auto" />
+                    <Badge style={{ width: "35px" }} color="violet" content={c.symbol} className="w-auto uppercase" />
                   </div>
                 </SelectItem>
               ))
@@ -472,9 +440,63 @@ startTransition(async()=>{
   const StepThreeForm = ()=>(
     <Animation.Slide in={true} placement="bottom">
       <Card className="w-full lg:w-4xl md:w-3xl p-5" aria-label="final step">
-        <CardHeader>
-            <h1>final please waiting</h1>
-        </CardHeader>
+        <CardBody className="flex gap-3 justify-around flex-row">
+           {/* current info */}
+          <div className="flex flex-col items-start gap-3 justify-center">
+            {/* from */}
+            <div className="flex gap-2">
+             <Skeleton isLoaded={!isPenExchange} className="rounded-full">
+               <Avatar isBordered src={step_one_data?.from_current_img}/>
+             </Skeleton>
+              <article>
+               <Skeleton isLoaded={!isPenExchange} className="rounded-2xl">
+                 <h1 className="text-[18px] font-semibold">{step_one_data?.from_current_name}</h1>
+               </Skeleton>
+               <Skeleton isLoaded={!isPenExchange} className="rounded-2xl mt-1">
+                 <p className="font-semibold">{step_one_data?.from_amount_code}{step_one_data?.from_current_amount}</p>
+               </Skeleton>
+              </article>
+            </div>
+            {/* to */}
+           <Skeleton isLoaded={!isPenExchange} className="rounded-2xl">
+             <ArrowDown className="text-primary-500 ml-2 font-bold text-2xl"/>
+           </Skeleton>
+              <div className="flex gap-2">
+              <Skeleton isLoaded={!isPenExchange} className="rounded-full">
+                <Avatar isBordered src={step_one_data?.to_current_img}/>
+              </Skeleton>
+              <article>
+                <Skeleton isLoaded={!isPenExchange} className="rounded-2xl">
+                  <h1 className="text-[18px] font-semibold">{step_one_data?.to_current_name}</h1>
+                </Skeleton>
+                <Skeleton isLoaded={!isPenExchange} className="rounded-2xl mt-1">
+                  <p className="font-semibold">{step_one_data?.to_amount_code}{step_one_data?.to_current_amount}</p>
+                </Skeleton>
+              </article>
+            </div>
+          </div>
+          {/* staus */}
+          <div className="space-y-3">
+            <Skeleton isLoaded={!isPenExchange} className="rounded-2xl">
+              <h1 className="flex items-center gap-1 text-[18px] font-semibold text-warning-500"> <Spinner color="warning" variant="simple"/> Waiting</h1>
+            </Skeleton>
+            <Skeleton isLoaded={!isPenExchange} className="rounded-2xl">
+              <p className="text-default-400 max-w-[400px]">Please waiting we are checking if the money you sent us or not 
+              when we recieved the amount we will approve order soon thanks to jion us
+            </p>
+            </Skeleton>
+           <article>
+            <Skeleton  isLoaded={!isPenExchange} className="rounded-2xl">
+              <h1 className="flex font-semibold text-default-600"> <ArrowDown/> the money we wil send this you account </h1>
+            </Skeleton>
+           <Skeleton isLoaded={!isPenExchange} className="rounded-2xl mt-1">
+              <Snippet classNames={{symbol:"hidden"}}>
+              {step_one_data?.user_account_number}
+            </Snippet>
+           </Skeleton>
+           </article>
+          </div>
+        </CardBody>
       </Card>
 
     </Animation.Slide>
