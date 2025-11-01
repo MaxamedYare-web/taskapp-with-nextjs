@@ -19,6 +19,8 @@ model User {
   lastlogin        DateTime      @default(now())
   role             Role          @default(User)
   avator           String        @default("")
+  whatsapp_number String         @default("")
+  telegram_number String @default("")
   allCurrentsAdmin AllCurrents[]
   blogs            Blogs[]
   exchangeUser     ExhangeUser[]
@@ -65,6 +67,10 @@ model ExhangeUser {
   to_current_img      String
   to_current_name     String
   user_account_number String
+  user_name String
+  user_avator String
+  user_username String
+  number_from_payment String
   authorId            Int
   status              StatusExchange
   author              User           @relation(fields: [authorId], references: [id])

@@ -15,9 +15,9 @@ import { TbBrandBlogger } from "react-icons/tb";
 import { Nav, Sidenav } from "rsuite";
 import "rsuite/Sidenav/styles/index.css";
 import "rsuite/Nav/styles/index.css";
-import { Drawer, DrawerBody, DrawerContent } from "@heroui/react";
+import { Accordion, AccordionItem, Drawer, DrawerBody, DrawerContent, Listbox, ListboxItem } from "@heroui/react";
 
-export default function NavBarCom({isOpen,onOpenChange}:{isOpen:boolean,onOpenChange:()=>void}) {
+export default function NavBarCom({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChange: () => void }) {
   const router = useRouter();
 
   const handleLogout = () => {
@@ -29,7 +29,7 @@ export default function NavBarCom({isOpen,onOpenChange}:{isOpen:boolean,onOpenCh
 
   return (
     <>
-    {/* desktop */}
+      {/* desktop */}
       <div className="w-[250px] lg:w-[400px] sm:bg-default-50 h-screen">
         <main className="mt-5">
           <div>
@@ -38,199 +38,220 @@ export default function NavBarCom({isOpen,onOpenChange}:{isOpen:boolean,onOpenCh
           </div>
 
           {/* show dashboard */}
-          <div>
-            <Sidenav>
-              <Sidenav.Body className="">
-                <Nav className="bg-red-600" style={{backgroundColor:"red"}}>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin"
-                    icon={<LayoutDashboard />}
-                    color="primary"
-                  >
-                    Dashboard
-                  </Nav.Item>
+           <Listbox aria-label="sidebar menu">
+                     <ListboxItem
+                     textValue="dashb"
+                         key={"dashboard"}
+                          href="/admin"
+                          startContent={<LayoutDashboard />}
+                          color="primary"
+                        >
+                          Dashboard
+                        </ListboxItem>
+                         <ListboxItem
+                         textValue="user"
+                         key={"users"}
+                          href="/admin/users"
+                          startContent={<Users />}
+                          color="primary"
+                        >
+                          Users
+                        </ListboxItem>
+                         <ListboxItem
+                         textValue="current"
+                         key={"currents"}
+                          href="/admin/currents"
+                          startContent={<Wallet />}
+                          color="primary"
+                        >
+                          Currents
+                        </ListboxItem>
 
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/users"
-                    icon={<Users />}
-                    color="primary"
-                  >
-                    Users
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/currents"
-                    icon={<Wallet />}
-                    color="primary"
-                  >
-                    Currents
-                  </Nav.Item>
-                  <Nav.Menu
-                    title={
-                      <div className="flex gap-3">
-                        <Combine /> Exchanges
-                      </div>
-                    }
-                  >
-                    <Nav.Item>All</Nav.Item>
-                    <Nav.Item>Approved</Nav.Item>
-                    <Nav.Item>Pending</Nav.Item>
-                    <Nav.Item>Refund</Nav.Item>
-                    <Nav.Item>Rejected</Nav.Item>
-                  </Nav.Menu>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/usrsban"
-                    key={"ban"}
-                    icon={<Ban />}
-                    color="primary"
-                  >
-                    Banned User
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/blogs"
-                    icon={<TbBrandBlogger />}
-                    color="primary"
-                  >
-                    Blogs
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    icon={<SiSpeedtest />}
-                    color="primary"
-                  >
-                    Testmonials
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/setting"
-                    icon={<Settings />}
-                    color="primary"
-                  >
-                    Setting
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    onClick={handleLogout}
-                    icon={<CgLogOut />}
-                    color="danger"
-                  >
-                    Logout
-                  </Nav.Item>
-                </Nav>
-              </Sidenav.Body>
-            </Sidenav>
-          </div>
+                        
+                        <ListboxItem textValue="accourdinate">
+                           <Accordion  aria-label="acour exchange">
+                         <AccordionItem  
+                         
+                         startContent={<Combine/>} key={"1"} title="Exchange">
+            
+                          <Listbox aria-label="menu contain">
+                             <ListboxItem textValue="all" key={"all exchange"}>All Exchange</ListboxItem>
+                         
+                          <ListboxItem href="/admin/pending" textValue="pending" key={"pending"}>Pending</ListboxItem>
+                           <ListboxItem href="/admin/approved" textValue="approved" key={"approved"}>Approved</ListboxItem>
+                          <ListboxItem href="/admin/refund" textValue="refund" key={"refund"}>Refund</ListboxItem>
+                          <ListboxItem href="/admin/rejected" textValue="rejected" key={"rejected"}>Rejected</ListboxItem>
+                          </Listbox>
+                         </AccordionItem>
+                        </Accordion>
+                        </ListboxItem>
+                       
+                        <ListboxItem
+                         textValue="ban user"
+                          href="/admin/usrsban"
+                          key={"ban"}
+                          startContent={<Ban />}
+                          color="primary"
+                        >
+                          Banned User
+                        </ListboxItem>
+                        <ListboxItem
+                        textValue="blog"
+                         key={"blogs"}
+                          href="/admin/blogs"
+                          startContent={<TbBrandBlogger />}
+                          color="primary"
+                        >
+                          Blogs
+                        </ListboxItem>
+                        <ListboxItem
+                        textValue="testmonial"
+                         key={"testmonials"}
+                          startContent={<SiSpeedtest />}
+                          color="primary"
+                        >
+                          Testmonials
+                        </ListboxItem>
+                        <ListboxItem
+                        textValue="setting"
+                         key={"settings"}
+                          href="/admin/setting"
+                          startContent={<Settings />}
+                          color="primary"
+                        >
+                          Setting
+                        </ListboxItem>
+                        <ListboxItem
+                        textValue="logout"
+                          key={"logout"}
+                          onClick={handleLogout}
+                           startContent={<CgLogOut />}
+                          color="danger"
+                        >
+                          Logout
+                        </ListboxItem>
+
+                  </Listbox>
         </main>
       </div>
-    
-    {/* mobile */}
-    <Drawer isOpen={isOpen} onOpenChange={onOpenChange} placement="left" size="sm">
-      <DrawerContent>
-        <DrawerBody>
-             <div className="">
-        <main className="mt-5">
-          <div>
-            <h1 className="text-2xl font-bold ml-2">Admin Dashboard </h1>
-            <hr />
-          </div>
 
-          {/* show dashboard */}
-          <div>
-            <Sidenav>
-              <Sidenav.Body >
-                <Nav>
-                  <Nav.Item
-                    style={{ display: "flex",justifyItems:"flex-start",justifyContent:"flex-start", gap: 10 }}
-                    href="/admin"
-                    icon={<LayoutDashboard />}
-                    color="primary"
-                  >
-                    Dashboard
-                  </Nav.Item>
+      {/* mobile */}
+      <Drawer className="bg-default-100" isOpen={isOpen} onOpenChange={onOpenChange} placement="left" size="sm">
+        <DrawerContent>
+          <DrawerBody>
+            <div>
+              <main className="mt-5">
+                <div>
+                  <h1 className="text-2xl font-bold ml-2">Admin Dashboard </h1>
+                  <hr />
+                </div>
 
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/users"
-                    icon={<Users />}
-                    color="primary"
-                  >
-                    Users
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/currents"
-                    icon={<Wallet />}
-                    color="primary"
-                  >
-                    Currents
-                  </Nav.Item>
-                  <Nav.Menu
-                    title={
-                      <div className="flex gap-3">
-                        <Combine /> Exchanges
-                      </div>
-                    }
-                  >
-                    <Nav.Item>All</Nav.Item>
-                    <Nav.Item>Approved</Nav.Item>
-                    <Nav.Item>Pending</Nav.Item>
-                    <Nav.Item>Refund</Nav.Item>
-                    <Nav.Item>Rejected</Nav.Item>
-                  </Nav.Menu>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/usrsban"
-                    key={"ban"}
-                    icon={<Ban />}
-                    color="primary"
-                  >
-                    Banned User
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/blogs"
-                    icon={<TbBrandBlogger />}
-                    color="primary"
-                  >
-                    Blogs
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    icon={<SiSpeedtest />}
-                    color="primary"
-                  >
-                    Testmonials
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    href="/admin/setting"
-                    icon={<Settings />}
-                    color="primary"
-                  >
-                    Setting
-                  </Nav.Item>
-                  <Nav.Item
-                    style={{ display: "flex", gap: 10 }}
-                    onClick={handleLogout}
-                    icon={<CgLogOut />}
-                    color="danger"
-                  >
-                    Logout
-                  </Nav.Item>
-                </Nav>
-              </Sidenav.Body>
-            </Sidenav>
-          </div>
-        </main>
-      </div>
-        </DrawerBody>
-      </DrawerContent>
+                {/* show dashboard */}
+                <div>
+                
+                  <Listbox aria-label="sidebar menu">
+                     <ListboxItem
+                     textValue="dashb"
+                         key={"dashboard"}
+                          href="/admin"
+                          startContent={<LayoutDashboard />}
+                          color="primary"
+                        >
+                          Dashboard
+                        </ListboxItem>
+                         <ListboxItem
+                         textValue="user"
+                         key={"users"}
+                          href="/admin/users"
+                          startContent={<Users />}
+                          color="primary"
+                        >
+                          Users
+                        </ListboxItem>
+                         <ListboxItem
+                         textValue="current"
+                         key={"currents"}
+                          href="/admin/currents"
+                          startContent={<Wallet />}
+                          color="primary"
+                        >
+                          Currents
+                        </ListboxItem>
 
-    </Drawer>
+                        
+                        <ListboxItem textValue="accourdinate">
+                           <Accordion  aria-label="acour exchange">
+                         <AccordionItem  
+                         
+                         startContent={<Combine/>} key={"1"} title="Exchange">
+            
+                          <Listbox aria-label="menu contain">
+                             <ListboxItem textValue="all" key={"all exchange"}>All Exchange</ListboxItem>
+                          <ListboxItem textValue="approved" key={"approved"}>Approved</ListboxItem>
+                          <ListboxItem textValue="pending" key={"pending"}>Pending</ListboxItem>
+                          <ListboxItem textValue="refund" key={"refund"}>Refund</ListboxItem>
+                          <ListboxItem textValue="rejected" key={"rejected"}>Rejected</ListboxItem>
+                          </Listbox>
+                         </AccordionItem>
+                        </Accordion>
+                        </ListboxItem>
+                       
+                        <ListboxItem
+                         textValue="ban user"
+                          href="/admin/usrsban"
+                          key={"ban"}
+                          startContent={<Ban />}
+                          color="primary"
+                        >
+                          Banned User
+                        </ListboxItem>
+                        <ListboxItem
+                        textValue="blog"
+                         key={"blogs"}
+                          href="/admin/blogs"
+                          startContent={<TbBrandBlogger />}
+                          color="primary"
+                        >
+                          Blogs
+                        </ListboxItem>
+                        <ListboxItem
+                        textValue="testmonial"
+                         key={"testmonials"}
+                          startContent={<SiSpeedtest />}
+                          color="primary"
+                        >
+                          Testmonials
+                        </ListboxItem>
+                        <ListboxItem
+                        textValue="setting"
+                         key={"settings"}
+                          href="/admin/setting"
+                          startContent={<Settings />}
+                          color="primary"
+                        >
+                          Setting
+                        </ListboxItem>
+                        <ListboxItem
+                        textValue="logout"
+                          key={"logout"}
+                          onClick={handleLogout}
+                           startContent={<CgLogOut />}
+                          color="danger"
+                        >
+                          Logout
+                        </ListboxItem>
+
+                  </Listbox>
+              
+                      
+                  
+                </div>
+              </main>
+            </div>
+          </DrawerBody>
+        </DrawerContent>
+
+      </Drawer>
     </>
   );
 }

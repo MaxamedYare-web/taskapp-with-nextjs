@@ -30,7 +30,9 @@ useEffect(()=>{
  })
 },[startTransition])
 
-
+if(typeof window !== 'undefined'){
+  new Date().toISOString()
+}
   return (<div  className="">
     <NavBarHome/>
   <Homepagecom userInfo={userInfo} token={token}/>

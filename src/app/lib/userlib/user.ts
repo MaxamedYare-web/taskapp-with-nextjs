@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react"
 import Api from "../apidata"
+import { Iuser } from "@/components/home/homepagecom"
 
 export const useUserDash = ()=>{
     const [isLoading,setIsloading] = useState<boolean>()
@@ -94,6 +95,21 @@ export const createExchange = async(exchangeData:any)=>{
     return error
  }
   
+}
+
+// get currents exchange
+export const getCurrentUser = async(exchangeId:string)=>{
+    try {
+        const response = await Api.get("/user/exchange")
+        if(response.status==200){
+        const dataCurrent:Iuser[] = await response.data.exchangsUser
+        const filterExchange = dataCurrent.find((ex)=>ex.id == Number(exchangeId))
+        return filterExchange
+        }
+       
+    } catch (error) {
+        return error
+    }
 }
 
 
